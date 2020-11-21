@@ -87,6 +87,21 @@ public class UsuarioRepositoryTests {
     @Transactional
     @Rollback
     /**
+     * Testando a busca de usuario por username.
+     */
+    public void testBuscarUsuarioPorUsername() {
+        Usuario usuario = usuarios.get(0);
+        usuarioRepository.salvarOuAtualizar(usuario);
+
+        Usuario usuarioH2 = usuarioRepository.buscarUsuarioPorUsername(usuario.getUsuario());
+
+        Assert.assertEquals(usuario.getSenha(), usuarioH2.getSenha());
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    /**
      * Testando a busca de varios usuários.
      */
     public void testBuscaUsuarios() {

@@ -36,6 +36,31 @@ public class UsuarioRepository implements ICrudRepository<Usuario, Long> {
         return usuario;
     }
 
+    /**
+     * Irá buscar o usuário pelo nome de usuário.
+     *
+     * @param username O nome de usuário.
+     * @return O objeto usuário ou null.
+     */
+    public Usuario buscarUsuarioPorUsername(String username) {
+        // estabelecendo a sessão
+        Session session = entityManager.unwrap(Session.class);
+
+        // criando a query para buscar o usuário
+        Query<Usuario> query = session.createQuery("from Usuario where usuario=:usuario", Usuario.class);
+        query.setParameter("usuario", username);
+
+        // buscando usuario
+        Usuario usuario;
+        try {
+            usuario = query.getSingleResult();
+        } catch (Exception e) {
+            usuario = null;
+        }
+
+        return usuario;
+    }
+
     @Override
     public List<Usuario> buscarTodos() {
         // estabelecendo a sessão
