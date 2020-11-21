@@ -66,20 +66,16 @@ public class UsuarioRepositoryTests {
                 .build();
 
         usuarios = Arrays.asList(usuario1, usuario2);
-
-        usuarioRepository.salvarOuAtualizar(usuario1);
-        usuarioRepository.salvarOuAtualizar(usuario2);
     }
 
     @Test
     @Transactional
-    @Rollback(value = true)
+    @Rollback
     /**
      * Testando busca de um usuario
      */
     public void testBuscaUsuario() {
         Usuario usuario = usuarios.get(0);
-
         usuarioRepository.salvarOuAtualizar(usuario);
 
         Usuario usuarioH2 = usuarioRepository.buscarPorId(12345L);
@@ -89,7 +85,7 @@ public class UsuarioRepositoryTests {
 
     @Test
     @Transactional
-    @Rollback(value = true)
+    @Rollback
     /**
      * Testando a busca de varios usuários.
      */
@@ -107,12 +103,15 @@ public class UsuarioRepositoryTests {
 
     @Test
     @Transactional
-    @Rollback(value = true)
+    @Rollback
     /**
      * Testando a exclusão de um usuário no banco de dados.
      */
-    public void testE() {
-        int ret = usuarioRepository.excluir(usuarios.get(0).getMatricula());
+    public void testExcluirUsuario() {
+        Usuario usuario = usuarios.get(0);
+        usuarioRepository.salvarOuAtualizar(usuario);
+
+        int ret = usuarioRepository.excluir(usuario.getMatricula());
 
         Assert.assertEquals(1, ret);
     }
