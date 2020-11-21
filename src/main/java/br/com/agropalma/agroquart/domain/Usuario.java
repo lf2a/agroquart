@@ -1,5 +1,8 @@
 package br.com.agropalma.agroquart.domain;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -161,40 +165,80 @@ public class Usuario implements Serializable {
         return matricula;
     }
 
+    public void setMatricula(Long matricula) {
+        this.matricula = matricula;
+    }
+
     public String getUsuario() {
         return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
     }
 
     public String getNomeCompleto() {
         return nomeCompleto;
     }
 
+    public void setNomeCompleto(String nomeCompleto) {
+        this.nomeCompleto = nomeCompleto;
+    }
+
     public String getEmpresa() {
         return empresa;
+    }
+
+    public void setEmpresa(String empresa) {
+        this.empresa = empresa;
     }
 
     public String getEmail() {
         return email;
     }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getSenha() {
         return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 
     public boolean isAtivo() {
         return ativo;
     }
 
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
+    }
+
     public Date getUltimoLogin() {
         return ultimoLogin;
+    }
+
+    public void setUltimoLogin(Date ultimoLogin) {
+        this.ultimoLogin = ultimoLogin;
     }
 
     public Date getCriadaEm() {
         return criadaEm;
     }
 
+    public void setCriadaEm(Date criadaEm) {
+        this.criadaEm = criadaEm;
+    }
+
     public Collection<Permissao> getPermissoes() {
         return permissoes;
+    }
+
+    public void setPermissoes(Collection<Permissao> permissoes) {
+        this.permissoes = permissoes;
     }
 
     public String formatarData(Date date) {
