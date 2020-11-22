@@ -52,7 +52,7 @@ public class AuthenticationSuccessHandlerCustomizado implements AuthenticationSu
         } else {
             // alterando o ultimo login no banco de dados
             usuario.setUltimoLogin(new Date());
-            usuarioService.salvarOuAtualizar(usuario);
+            usuarioService.atualizarUsuario(usuario);
 
             // carregando as informações do usuário na sessão
             HttpSession session = request.getSession();
