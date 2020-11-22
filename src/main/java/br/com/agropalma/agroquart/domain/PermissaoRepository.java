@@ -36,6 +36,18 @@ public class PermissaoRepository implements ICrudRepository<Permissao, Long> {
         return permissao;
     }
 
+    public List<Permissao> buscarPermissoesPorIds(List<Long> ids) {
+        // estabelecendo uma sessão
+        Session session = entityManager.unwrap(Session.class);
+
+        // criando a query para buscar as permissoes
+        Query<Permissao> query = session.createQuery("select permissao from Permissao permissao where permissao.id in :ids");
+        query.setParameterList("ids", ids);
+
+        // buscando as permissoes
+        return query.getResultList();
+    }
+
     @Override
     public List<Permissao> buscarTodos() {
         // estabelecendo a sessão

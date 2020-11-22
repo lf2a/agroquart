@@ -1,8 +1,10 @@
 package br.com.agropalma.agroquart.service;
 
 import br.com.agropalma.agroquart.domain.Permissao;
+import br.com.agropalma.agroquart.domain.PermissaoRepository;
 import br.com.agropalma.agroquart.domain.Usuario;
 import br.com.agropalma.agroquart.domain.UsuarioRepository;
+import br.com.agropalma.agroquart.web.form.UsuarioForm;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -10,10 +12,12 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,6 +34,12 @@ public class UsuarioService implements UserDetailsService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private PermissaoRepository permissaoRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Permissao> permissoes) {
         return permissoes.stream().map(permissao -> new SimpleGrantedAuthority(permissao.getNome())).collect(Collectors.toList());
@@ -88,6 +98,28 @@ public class UsuarioService implements UserDetailsService {
     @Transactional
     public void atualizarUsuario(Usuario obj) {
         usuarioRepository.salvarOuAtualizar(obj);
+    }
+
+    /**
+     * Irá salvar um novo usuário no banco de dados
+     *
+     * @param usuarioForm O formulario enviado pelo usuário
+     */
+    @Transactional
+    public void novoUsuario(UsuarioForm usuarioForm) {
+        Usuario usuario = new Usuario.Builder()
+                .matricula(usuarioForm.getMatricula())
+                .nomeCompleto(usuarioForm.getNomeCompleto())
+                .email(usuarioForm.getEmail())
+                .ativo(usuarioForm.getAtivo())
+                .usuario(usuarioForm.getUsuario())
+                .empresa(usuarioForm.getEmpresa())
+                .senha(passwordEncoder.encode(usuarioForm.getSenha()))
+                .criadaEm(new Date())
+                .permissoes(permissaoRepository.buscarPermissoesPorIds(usuarioForm.getPermissoes()))
+                .build();
+
+        usuarioRepository.salvarOuAtualizar(usuario);
     }
 
     /**

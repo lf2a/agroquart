@@ -11,6 +11,8 @@
     <title>Admin</title>
 </head>
 <body>
-Admin
+<sec:authorize access="hasAuthority('ROLE_USUARIO')">
+    <a href="${pageContext.request.contextPath}/admin/usuarios">Usuários</a>
+</sec:authorize>
 </body>
 </html>

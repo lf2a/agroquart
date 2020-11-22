@@ -45,4 +45,11 @@ public class AdminControllerTests {
         this.mockMvc.perform(MockMvcRequestBuilders.get("/admin"))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
+
+    @Test
+    @WithMockUser(roles = {"USUARIO", "ADMIN"})
+    public void testAcessoUsuarios() throws Exception {
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/admin/usuarios"))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
 }
