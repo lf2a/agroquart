@@ -20,7 +20,7 @@
 </c:if>
 
 <c:if test="${param.sucesso == ''}">
-        <p>Usuário salvo com sucesso!</p>
+    <p>Usuário salvo com sucesso!</p>
 </c:if>
 
 <form action="${pageContext.request.contextPath}/usuario" method="post">
@@ -33,20 +33,9 @@
     <label for="ativo">Ativo</label>
     <input type="checkbox" id="ativo" name="ativo" checked>
     <select multiple size="5" name="permissoes">
-        <option value="1">ROLE_ADMIN</option>
-        <option value="2">ROLE_USUARIO</option>
-        <option value="3">ROLE_CRIAR_USUARIO</option>
-        <option value="4">ROLE_EDITAR_USUARIO</option>
-        <option value="5">ROLE_EXCLUIR_USUARIO</option>
-        <option value="6">ROLE_HOSPEDARIA</option>
-        <option value="7">ROLE_CRIAR_HOSPEDARIA</option>
-        <option value="8">ROLE_ALTERAR_HOSPEDARIA</option>
-        <option value="9">ROLE_EXCLUIR_HOSPEDARIA</option>
-        <option value="10">ROLE_RESERVA</option>
-        <option value="11">ROLE_CRIAR_RESERVA</option>
-        <option value="12">ROLE_EDITAR_RESERVA</option>
-        <option value="13">ROLE_EXCLUIR_RESERVA</option>
-        <option value="14">ROLE_RELATORIO</option>
+        <c:forEach items="${permissoes}" var="p">
+            <option value="${p.id}">${p.nome}</option>
+        </c:forEach>
     </select>
     <input class="input" id="senha" name="senha" type="password" placeholder="Password">
     <input class="input" id="senha" name="senha2" type="password" placeholder="Password confirmation">
@@ -78,10 +67,10 @@
             <td>${usuario.ultimoLogin}</td>
             <td>${usuario.criadaEm}</td>
             <sec:authorize access="hasAnyAuthority('ROLE_EDITAR_USUARIO')">
-                <td><a href="http://">editar</a></td>
+                <td><a href="${pageContext.request.contextPath}/usuario/${usuario.matricula}/editar">editar</a></td>
             </sec:authorize>
             <sec:authorize access="hasAnyAuthority('ROLE_EXCLUIR_USUARIO')">
-                <td><a href="http://">excluir</a></td>
+                <td><a href="${pageContext.request.contextPath}/usuario/${usuario.matricula}/excluir">excluir</a></td>
             </sec:authorize>
         </tr>
     </c:forEach>

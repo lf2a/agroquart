@@ -1,6 +1,6 @@
 package br.com.agropalma.agroquart.web;
 
-import br.com.agropalma.agroquart.domain.Usuario;
+import br.com.agropalma.agroquart.service.PermissaoService;
 import br.com.agropalma.agroquart.service.UsuarioService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -27,6 +26,9 @@ public class AdminController {
     @Autowired
     private UsuarioService usuarioService;
 
+    @Autowired
+    private PermissaoService permissaoService;
+
     @GetMapping("")
     @PreAuthorize("hasRole('ADMIN')")
     public String index() {
@@ -36,8 +38,8 @@ public class AdminController {
     @GetMapping("/usuarios")
     @PreAuthorize("hasRole('ADMIN') && hasRole('USUARIO')")
     public String usuarios(Map<String, Object> model) {
-        List<Usuario> usuarioList = usuarioService.buscarTodos();
-        model.put("usuarios", usuarioList);
+        model.put("usuarios", usuarioService.buscarTodos());
+        model.put("permissoes", permissaoService.buscarTodos());
 
         return "admin/usuarios";
     }
