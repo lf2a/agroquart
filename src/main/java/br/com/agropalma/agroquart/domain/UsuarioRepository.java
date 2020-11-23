@@ -103,7 +103,7 @@ public class UsuarioRepository implements ICrudRepository<Usuario, Long> {
         session.saveOrUpdate(obj);
     }
 
-    public void salvar(Usuario obj) throws SQLException {
+    public void salvar(Usuario obj) {
         // estabelecendo a sessão
         Session session = entityManager.unwrap(Session.class);
 

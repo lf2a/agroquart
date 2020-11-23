@@ -23,6 +23,10 @@
     <p>Usuário salvo com sucesso!</p>
 </c:if>
 
+<c:if test="${param.excluido == ''}">
+    <p>Usuário excluido com sucesso!</p>
+</c:if>
+
 <form action="${pageContext.request.contextPath}/usuario" method="post">
     <sec:csrfInput/>
     <input class="input" type="text" name="usuario" placeholder="Nome de usuário" required>

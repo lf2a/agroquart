@@ -141,6 +141,7 @@ public class UsuarioService implements UserDetailsService {
                 .criadaEm(new Date())
                 .permissoes(permissaoRepository.buscarPermissoesPorIds(usuarioForm.getPermissoes()))
                 .build();
+        usuarioRepository.salvar(usuario);
     }
 
     /**

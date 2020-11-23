@@ -143,7 +143,7 @@ public class UsuarioController {
 
         if (usuarioObj != null) {
             usuarioService.excluir(usuarioObj.getMatricula());
-            return "redirect:/admin";
+            return "redirect:/admin/usuarios?excluido";
         }
 
         return "redirect:/404";
