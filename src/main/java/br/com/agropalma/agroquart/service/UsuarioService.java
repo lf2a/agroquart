@@ -1,9 +1,9 @@
 package br.com.agropalma.agroquart.service;
 
 import br.com.agropalma.agroquart.domain.Permissao;
-import br.com.agropalma.agroquart.domain.PermissaoRepository;
+import br.com.agropalma.agroquart.domain.repository.PermissaoRepository;
 import br.com.agropalma.agroquart.domain.Usuario;
-import br.com.agropalma.agroquart.domain.UsuarioRepository;
+import br.com.agropalma.agroquart.domain.repository.UsuarioRepository;
 import br.com.agropalma.agroquart.web.form.UsuarioForm;
 
 import org.springframework.beans.factory.annotation.Autowired;

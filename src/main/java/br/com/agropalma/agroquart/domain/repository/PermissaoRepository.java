@@ -1,4 +1,6 @@
-package br.com.agropalma.agroquart.domain;
+package br.com.agropalma.agroquart.domain.repository;
+
+import br.com.agropalma.agroquart.domain.Permissao;
 
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -15,7 +17,7 @@ import java.util.List;
  *
  * @author Luiz Filipy
  * @version 2.0
- * @see br.com.agropalma.agroquart.domain.ICrudRepository
+ * @see ICrudRepository
  * @see br.com.agropalma.agroquart.domain.Permissao
  * @since 21/11/2020
  */

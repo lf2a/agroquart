@@ -2,6 +2,7 @@ package br.com.agropalma.agroquart.domain;
 
 import br.com.agropalma.agroquart.AgroquartApplication;
 import br.com.agropalma.agroquart.config.H2Config;
+import br.com.agropalma.agroquart.domain.repository.UsuarioRepository;
 
 import org.junit.Assert;
 import org.junit.Before;

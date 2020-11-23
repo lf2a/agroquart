@@ -1,7 +1,7 @@
 package br.com.agropalma.agroquart.service;
 
 import br.com.agropalma.agroquart.domain.Permissao;
-import br.com.agropalma.agroquart.domain.PermissaoRepository;
+import br.com.agropalma.agroquart.domain.repository.PermissaoRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

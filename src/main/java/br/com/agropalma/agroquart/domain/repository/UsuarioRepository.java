@@ -1,4 +1,6 @@
-package br.com.agropalma.agroquart.domain;
+package br.com.agropalma.agroquart.domain.repository;
+
+import br.com.agropalma.agroquart.domain.Usuario;
 
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -7,7 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 
-import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -16,7 +17,7 @@ import java.util.List;
  *
  * @author Luiz Filipy
  * @version 2.0
- * @see br.com.agropalma.agroquart.domain.ICrudRepository
+ * @see ICrudRepository
  * @see br.com.agropalma.agroquart.domain.Usuario
  * @since 20/11/2020
  */

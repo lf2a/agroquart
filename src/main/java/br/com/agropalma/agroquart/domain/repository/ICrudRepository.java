@@ -1,4 +1,4 @@
-package br.com.agropalma.agroquart.domain;
+package br.com.agropalma.agroquart.domain.repository;
 
 import java.util.List;
 
