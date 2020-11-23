@@ -118,11 +118,6 @@ public class UsuarioService implements UserDetailsService {
         usuarioRepository.salvarOuAtualizar(usuarioBuilder);
     }
 
-    @Transactional(readOnly = true)
-    public Usuario verificarEmailUsername(String usuario, String email) {
-        return usuarioRepository.verificarEmailUsername(usuario, email);
-    }
-
     /**
      * Irá salvar um novo usuário no banco de dados
      *
