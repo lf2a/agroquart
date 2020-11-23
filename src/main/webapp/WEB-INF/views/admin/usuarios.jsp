@@ -70,7 +70,13 @@
                 <td><a href="${pageContext.request.contextPath}/usuario/${usuario.matricula}/editar">editar</a></td>
             </sec:authorize>
             <sec:authorize access="hasAnyAuthority('ROLE_EXCLUIR_USUARIO')">
-                <td><a href="${pageContext.request.contextPath}/usuario/${usuario.matricula}/excluir">excluir</a></td>
+                <td>
+                    <form action="${pageContext.request.contextPath}/usuario/${usuario.matricula}/excluir"
+                          method="post">
+                        <sec:csrfInput/>
+                        <button type="submit">Excluir</button>
+                    </form>
+                </td>
             </sec:authorize>
         </tr>
     </c:forEach>

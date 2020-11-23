@@ -8,6 +8,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -56,6 +57,10 @@ public class UsuarioForm {
     @NotNull(message = "O usuario deve possuir pelo menos uma permissão")
     @Size(min = 1, message = "O usuario deve possuir pelo menos uma permissão")
     private List<Long> permissoes;
+
+    private Date criadeEm;
+
+    private Date ultimoLogin;
 
     public Long getMatricula() {
         return matricula;
@@ -129,6 +134,22 @@ public class UsuarioForm {
         this.permissoes = permissoes;
     }
 
+    public Date getCriadeEm() {
+        return criadeEm;
+    }
+
+    public void setCriadeEm(Date criadeEm) {
+        this.criadeEm = criadeEm;
+    }
+
+    public Date getUltimoLogin() {
+        return ultimoLogin;
+    }
+
+    public void setUltimoLogin(Date ultimoLogin) {
+        this.ultimoLogin = ultimoLogin;
+    }
+
     @Override
     public String toString() {
         return "UsuarioForm{" +
@@ -140,6 +161,8 @@ public class UsuarioForm {
                 ", ativo='" + ativo + '\'' +
                 ", senha='" + senha + '\'' +
                 ", senha2='" + senha2 + '\'' +
+                ", ultimoLogin='" + ultimoLogin + '\'' +
+                ", criadaEm='" + criadeEm + '\'' +
                 ", permissoes=" + permissoes +
                 '}';
     }

@@ -30,10 +30,10 @@ import java.util.Objects;
 public class Usuario implements Serializable {
 
     @Id
-    @Column(name = "matricula")
+    @Column(name = "matricula", unique = true)
     private Long matricula;
 
-    @Column(name = "usuario")
+    @Column(name = "usuario", unique = true)
     private String usuario;
 
     @Column(name = "nome_completo")
@@ -42,7 +42,7 @@ public class Usuario implements Serializable {
     @Column(name = "empresa")
     private String empresa;
 
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     private String email;
 
     @Column(name = "senha")
@@ -57,7 +57,7 @@ public class Usuario implements Serializable {
     @Column(name = "criada_em")
     private Date criadaEm;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "usuarios_permissoes",
             joinColumns = @JoinColumn(name = "usuario_matricula"),
             inverseJoinColumns = @JoinColumn(name = "permissao_id"))

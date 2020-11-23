@@ -100,6 +100,29 @@ public class UsuarioService implements UserDetailsService {
         usuarioRepository.salvarOuAtualizar(obj);
     }
 
+    @Transactional
+    public void atualizarUsuario(UsuarioForm obj, Usuario usuario) {
+
+        Usuario usuarioBuilder = new Usuario.Builder()
+                .matricula(usuario.getMatricula())
+                .nomeCompleto(obj.getNomeCompleto())
+                .email(obj.getEmail())
+                .ativo(obj.getAtivo())
+                .usuario(obj.getUsuario())
+                .empresa(obj.getEmpresa())
+                .senha(obj.getSenha())
+                .criadaEm(usuario.getCriadaEm())
+                .ultimoLogin(usuario.getUltimoLogin())
+                .permissoes(permissaoRepository.buscarPermissoesPorIds(obj.getPermissoes()))
+                .build();
+        usuarioRepository.salvarOuAtualizar(usuarioBuilder);
+    }
+
+    @Transactional(readOnly = true)
+    public Usuario verificarEmailUsername(String usuario, String email) {
+        return usuarioRepository.verificarEmailUsername(usuario, email);
+    }
+
     /**
      * Irá salvar um novo usuário no banco de dados
      *
@@ -118,8 +141,6 @@ public class UsuarioService implements UserDetailsService {
                 .criadaEm(new Date())
                 .permissoes(permissaoRepository.buscarPermissoesPorIds(usuarioForm.getPermissoes()))
                 .build();
-
-        usuarioRepository.salvarOuAtualizar(usuario);
     }
 
     /**

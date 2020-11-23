@@ -2,6 +2,7 @@ package br.com.agropalma.agroquart.web;
 
 import br.com.agropalma.agroquart.config.AuthenticationSuccessHandlerCustomizado;
 import br.com.agropalma.agroquart.config.ProdDbConfig;
+import br.com.agropalma.agroquart.service.PermissaoService;
 import br.com.agropalma.agroquart.service.UsuarioService;
 
 import org.junit.Test;
@@ -41,6 +42,9 @@ public class UsuarioControllerTests {
     @MockBean
     private ProdDbConfig prodDbConfig;
 
+    @MockBean
+    private PermissaoService permissaoService;
+
     @Test
     @WithMockUser(roles = {"USUARIO", "CRIAR_USUARIO"})
     public void testAcessoCriarUsuario() throws Exception {
@@ -56,7 +60,7 @@ public class UsuarioControllerTests {
     @WithMockUser(roles = {"USUARIO", "EDITAR_USUARIO"})
     public void testAcessoEditarUsuarioGet() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders.get("/usuario/1/editar"))
-                .andExpect(MockMvcResultMatchers.status().isOk());
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection());
     }
 
     @Test

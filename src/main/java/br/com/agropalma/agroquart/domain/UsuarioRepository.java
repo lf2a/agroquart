@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -61,6 +62,25 @@ public class UsuarioRepository implements ICrudRepository<Usuario, Long> {
         return usuario;
     }
 
+    public Usuario verificarEmailUsername(String usuario, String email) {
+        // estabelecendo a sessão
+        Session session = entityManager.unwrap(Session.class);
+
+        // criando a query para buscar o usuário
+        Query<Usuario> query = session.createQuery("from Usuario where usuario=:usuario or email=:email", Usuario.class);
+        query.setParameter("usuario", usuario);
+        query.setParameter("email", email);
+
+        Usuario usuarioObj;
+        try {
+            usuarioObj = query.getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
+
+        return usuarioObj;
+    }
+
     @Override
     public List<Usuario> buscarTodos() {
         // estabelecendo a sessão
@@ -81,6 +101,14 @@ public class UsuarioRepository implements ICrudRepository<Usuario, Long> {
 
         // salvando/atualizando o objeto
         session.saveOrUpdate(obj);
+    }
+
+    public void salvar(Usuario obj) throws SQLException {
+        // estabelecendo a sessão
+        Session session = entityManager.unwrap(Session.class);
+
+        // salvando/atualizando o objeto
+        session.save(obj);
     }
 
     @Override
