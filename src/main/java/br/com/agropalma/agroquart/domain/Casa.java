@@ -40,7 +40,7 @@ public class Casa {
     @Column(name = "terceirizado")
     private boolean terceirizado;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "hospedaria_id")
     private Hospedaria hospedaria;
 
