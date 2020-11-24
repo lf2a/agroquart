@@ -20,5 +20,12 @@ olá
 <sec:authorize access="isAnonymous()">
     <a href="${pageContext.request.contextPath}/login">Login</a>
 </sec:authorize>
+
+<sec:authorize access="isAuthenticated()">
+    <form action="${pageContext.request.contextPath}/logout" method="post">
+        <sec:csrfInput/>
+        <button type="submit">Logout</button>
+    </form>
+</sec:authorize>
 </body>
 </html>
