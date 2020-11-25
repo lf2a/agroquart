@@ -20,9 +20,9 @@ public class CasaForm {
     @Max(value = 99999999, message = "O id da casa deve ser menor que 1 milhão")
     private Long id;
 
-    @NotNull(message = "O número do quarto é obrigatório")
-    @Min(value = 1, message = "O numero do quarto deve ser maior que zero")
-    @Max(value = 99999999, message = "O numero do quarto deve ser menor que 1 milhão")
+    @NotNull(message = "O número da casa é obrigatório")
+    @Min(value = 1, message = "O numero da casa deve ser maior que zero")
+    @Max(value = 99999999, message = "O numero da casa deve ser menor que 1 milhão")
     private Long numero;
 
     private boolean tipo;

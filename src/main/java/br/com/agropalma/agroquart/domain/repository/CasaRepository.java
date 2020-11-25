@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 
 import java.util.List;
 
@@ -34,7 +35,11 @@ public class CasaRepository implements ICrudRepository<Casa, Long> {
         Query<Casa> query = session.createQuery("select c from Casa c join fetch c.hospedaria where c.id=:casaId", Casa.class);
         query.setParameter("casaId", id);
 
-        return query.getSingleResult();
+        try {
+            return query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 
     @Override
