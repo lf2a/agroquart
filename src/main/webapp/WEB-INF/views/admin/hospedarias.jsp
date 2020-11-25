@@ -27,46 +27,54 @@
 </c:if>
 
 <h1>Hospedarias</h1>
-<ul>
-    <form action="${pageContext.request.contextPath}/hospedaria" method="post">
-        <sec:csrfInput/>
-        <input type="text" name="nomeHospedaria" id="nome" placeholder="Nome da hospedaria" required>
-        <button type="submit">Inserir</button>
-    </form>
+<form action="${pageContext.request.contextPath}/hospedaria" method="post">
+    <sec:csrfInput/>
+    <input type="text" name="nomeHospedaria" id="nome" placeholder="Nome da hospedaria" required>
+    <button type="submit">Inserir</button>
+</form>
 
-    <c:forEach items="${hospedarias}" var="hospedaria">
-        <li>Nome da hospedaria: <a
-                href="${pageContext.request.contextPath}/admin/${hospedaria.id}/casas">${hospedaria.nomeHospedaria}</a>
-            <a href="${pageContext.request.contextPath}/hospedaria/${hospedaria.id}/editar">editar</a>
-            <form action="${pageContext.request.contextPath}/hospedaria/${hospedaria.id}/excluir" method="post">
-                <sec:csrfInput/>
-                <button type="submit">excluir</button>
-            </form>
-            <ul>
-                <c:forEach items="${hospedaria.casas}" var="casa">
-                    <li>Número da casa: <a
-                            href="${pageContext.request.contextPath}/admin/${hospedaria.id}/${casa.id}/quartos">${casa.numero}</a>
-                        <a href="${pageContext.request.contextPath}/casa/${casa.id}/editar">editar</a>
-                        <form action="${pageContext.request.contextPath}/casa/${casa.id}/excluir" method="post">
-                            <sec:csrfInput/>
-                            <button type="submit">excluir</button>
-                        </form>
-                        <ul>
-                            <c:forEach items="${casa.quartos}" var="quarto">
-                                <li>Capacidade do quarto: ${quarto.capacidade}
-                                    <a href="${pageContext.request.contextPath}/quarto/${quarto.id}/editar">editar</a>
-                                    <form action="${pageContext.request.contextPath}/quarto/${quarto.id}/excluir" method="post">
-                                        <sec:csrfInput/>
-                                        <button type="submit">excluir</button>
-                                    </form>
-                                </li>
-                            </c:forEach>
-                        </ul>
-                    </li>
-                </c:forEach>
-            </ul>
-        </li>
-    </c:forEach>
-</ul>
+<c:choose>
+    <c:when test="${hospedarias.size()==0}">
+        <h1>Ainda não existe hospedarias cadastradas no sistema.</h1>
+    </c:when>
+    <c:otherwise>
+        <ul>
+            <c:forEach items="${hospedarias}" var="hospedaria">
+                <li>Nome da hospedaria: <a
+                        href="${pageContext.request.contextPath}/admin/${hospedaria.id}/casas">${hospedaria.nomeHospedaria}</a>
+                    <a href="${pageContext.request.contextPath}/hospedaria/${hospedaria.id}/editar">editar</a>
+                    <form action="${pageContext.request.contextPath}/hospedaria/${hospedaria.id}/excluir" method="post">
+                        <sec:csrfInput/>
+                        <button type="submit">excluir</button>
+                    </form>
+                    <ul> <%-- TODO: decidir se esta sublista vai ser renderizada --%>
+                        <c:forEach items="${hospedaria.casas}" var="casa">
+                            <li>Número da casa: <a
+                                    href="${pageContext.request.contextPath}/admin/${hospedaria.id}/${casa.id}/quartos">${casa.numero}</a>
+                                <a href="${pageContext.request.contextPath}/casa/${casa.id}/editar">editar</a>
+                                <form action="${pageContext.request.contextPath}/casa/${casa.id}/excluir" method="post">
+                                    <sec:csrfInput/>
+                                    <button type="submit">excluir</button>
+                                </form>
+                                <ul>
+                                    <c:forEach items="${casa.quartos}" var="quarto">
+                                        <li>Capacidade do quarto: ${quarto.capacidade}
+                                            <a href="${pageContext.request.contextPath}/quarto/${quarto.id}/editar">editar</a>
+                                            <form action="${pageContext.request.contextPath}/quarto/${quarto.id}/excluir"
+                                                  method="post">
+                                                <sec:csrfInput/>
+                                                <button type="submit">excluir</button>
+                                            </form>
+                                        </li>
+                                    </c:forEach>
+                                </ul>
+                            </li>
+                        </c:forEach>
+                    </ul>
+                </li>
+            </c:forEach>
+        </ul>
+    </c:otherwise>
+</c:choose>
 </body>
 </html>

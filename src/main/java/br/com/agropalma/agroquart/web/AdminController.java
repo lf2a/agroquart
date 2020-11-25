@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * <h1>AdminController.java</h1>
@@ -64,9 +65,7 @@ public class AdminController {
     @GetMapping("/hospedarias")
     @PreAuthorize("hasRole('ADMIN') && hasRole('HOSPEDARIA')")
     public String hospedarias(Map<String, Object> model) {
-        List<Hospedaria> hospedariaList = hospedariaService.buscarTodos();
-
-        model.put("hospedarias", hospedariaList);
+        model.put("hospedarias", hospedariaService.buscarTodos());
 
         return "admin/hospedarias";
     }
