@@ -88,10 +88,18 @@ public class AdminController {
 
     @GetMapping("/{hospedaria}/{casa}/quartos")
     @PreAuthorize("hasRole('ADMIN') && hasRole('HOSPEDARIA')")
-    public String quartos(@PathVariable("casa") String casa, Map<String, Object> model) {
-        List<Quarto> quartos = quartoService.buscarQuartosPorCasa(Long.parseLong(casa));
+    public String quartos(@PathVariable("hospedaria") String hospedaria, @PathVariable("casa") String casa, Map<String, Object> model) {
+        Long hospedariaId = null;
+        Long casaId = null;
 
-        model.put("quartos", quartos);
+        try {
+            casaId = Long.parseLong(casa);
+            hospedariaId = Long.parseLong(hospedaria); // não é usado, mas tambem é feita a verificação
+        } catch (NumberFormatException e) { // se tivar letra, espaço ou simbolos irá retorna uma pagina de erro.
+            return "error/400"; // bad request: https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Status/400
+        }
+
+        model.put("quartos", quartoService.buscarQuartosPorCasa(casaId));
 
         return "admin/quartos";
     }

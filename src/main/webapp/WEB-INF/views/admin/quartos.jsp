@@ -30,24 +30,31 @@
     <sec:csrfInput/>
     <input type="hidden" name="id" value="777">
     <input type="number" name="capacidade" placeholder="Capacidade" required>
-    <input type="hidden" name="casa" value="${quartos[0].casa.id}">
-    <input type="hidden" name="hospedaria" value="${quartos[0].casa.hospedaria.id}">
+    <input type="hidden" name="casa" value="${casa}">
+    <input type="hidden" name="hospedaria" value="${hospedaria}">
     <button type="submit">Criar quarto</button>
 </form>
 
 <h1>${quartos[0].casa.numero}</h1>
 
-<ul>
-    <c:forEach items="${quartos}" var="quarto">
-        <li>Capacidade do quarto: ${quarto.capacidade}
-            <a href="${pageContext.request.contextPath}/quarto/${quarto.id}/editar">editar</a>
-            <form action="${pageContext.request.contextPath}/quarto/${quarto.id}/excluir" method="post">
-                <sec:csrfInput/>
-                <button type="submit">excluir</button>
-            </form>
-        </li>
-    </c:forEach>
-</ul>
+<c:choose>
+    <c:when test="${quartos.size()==0}">
+        <h1>Ainda não existe quartos desta casa.</h1>
+    </c:when>
+    <c:otherwise>
+        <ul>
+            <c:forEach items="${quartos}" var="quarto">
+                <li>Capacidade do quarto: ${quarto.capacidade}
+                    <a href="${pageContext.request.contextPath}/quarto/${quarto.id}/editar">editar</a>
+                    <form action="${pageContext.request.contextPath}/quarto/${quarto.id}/excluir" method="post">
+                        <sec:csrfInput/>
+                        <button type="submit">excluir</button>
+                    </form>
+                </li>
+            </c:forEach>
+        </ul>
+    </c:otherwise>
+</c:choose>
 
 </body>
 </html>
