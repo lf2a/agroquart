@@ -73,9 +73,15 @@ public class AdminController {
     @GetMapping("/{hospedaria}/casas")
     @PreAuthorize("hasRole('ADMIN') && hasRole('HOSPEDARIA')")
     public String casas(@PathVariable("hospedaria") String hospedaria, Map<String, Object> model) {
-        List<Casa> casas = casaService.buscarCasasPorHospedaria(Long.parseLong(hospedaria));
+        Long hospedariaId = null;
 
-        model.put("casas", casas);
+        try {
+            hospedariaId = Long.parseLong(hospedaria);
+        } catch (NumberFormatException e) { // se tivar letra, espaço ou simbolos irá retorna uma pagina de erro.
+            return "error/400"; // bad request: https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Status/400
+        }
+
+        model.put("casas", casaService.buscarCasasPorHospedaria(hospedariaId));
 
         return "admin/casas";
     }

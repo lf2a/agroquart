@@ -38,35 +38,43 @@
     <label for="terceirizado">terceirizado</label>
     <input type="checkbox" name="terceirizado" id="terceirizado">
     <input type="hidden" name="hospedaria" id="" placeholder="id da hospedaria"
-           value="${casas[0].hospedaria.id}" readonly>
+           value="${hospedaria}" readonly>
     <button type="submit">Criar nova casa</button>
 </form>
 
 <h1>${casas[0].hospedaria.nomeHospedaria}</h1>
 
-<ul>
-    <c:forEach items="${casas}" var="casa">
-        <li>Número da casa: <a
-                href="${pageContext.request.contextPath}/admin/${casa.hospedaria.id}/${casa.id}/quartos">${casa.numero}</a>
-            <a href="${pageContext.request.contextPath}/casa/${casa.id}/editar">editar</a>
-            <form action="${pageContext.request.contextPath}/casa/${casa.id}/excluir" method="post">
-                <sec:csrfInput/>
-                <button type="submit">excluir</button>
-            </form>
-            <ul>
-                <c:forEach items="${casa.quartos}" var="quarto">
-                    <li>Número do quarto: ${casa.numero}
-                        <a href="${pageContext.request.contextPath}/quarto/${quarto.id}/editar">editar</a>
-                        <form action="${pageContext.request.contextPath}/quarto/${quarto.id}/excluir" method="post">
-                            <sec:csrfInput/>
-                            <button type="submit">excluir</button>
-                        </form>
-                    </li>
-                </c:forEach>
-            </ul>
-        </li>
-    </c:forEach>
-</ul>
+<c:choose>
+    <c:when test="${casas.size()==0}">
+        <h1>Ainda não existe casa desta hospedaria.</h1>
+    </c:when>
+    <c:otherwise>
+        <ul>
+            <c:forEach items="${casas}" var="casa">
+                <li>Número da casa: <a
+                        href="${pageContext.request.contextPath}/admin/${hospedaria}/${casa.id}/quartos">${casa.numero}</a>
+                    <a href="${pageContext.request.contextPath}/casa/${casa.id}/editar">editar</a>
+                    <form action="${pageContext.request.contextPath}/casa/${casa.id}/excluir" method="post">
+                        <sec:csrfInput/>
+                        <button type="submit">excluir</button>
+                    </form>
+                    <ul> <%-- TODO: decidir se esta sublista vai ser renderizada --%>
+                        <c:forEach items="${casa.quartos}" var="quarto">
+                            <li>Número do quarto: ${casa.numero}
+                                <a href="${pageContext.request.contextPath}/quarto/${quarto.id}/editar">editar</a>
+                                <form action="${pageContext.request.contextPath}/quarto/${quarto.id}/excluir"
+                                      method="post">
+                                    <sec:csrfInput/>
+                                    <button type="submit">excluir</button>
+                                </form>
+                            </li>
+                        </c:forEach>
+                    </ul>
+                </li>
+            </c:forEach>
+        </ul>
+    </c:otherwise>
+</c:choose>
 
 </body>
 </html>
