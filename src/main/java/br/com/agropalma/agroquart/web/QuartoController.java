@@ -1,10 +1,10 @@
 package br.com.agropalma.agroquart.web;
 
-import br.com.agropalma.agroquart.domain.Casa;
 import br.com.agropalma.agroquart.domain.Quarto;
 import br.com.agropalma.agroquart.service.QuartoService;
 import br.com.agropalma.agroquart.web.form.QuartoForm;
 
+import br.com.agropalma.agroquart.web.validation.ValidacaoForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -22,6 +22,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * <h1>QuartoController.java</h1>
@@ -40,22 +41,11 @@ public class QuartoController {
 
     @PostMapping("")
     @PreAuthorize("hasRole('HOSPEDARIA') && hasRole('CRIAR_HOSPEDARIA')")
-    public String criarQuarto(@Valid @ModelAttribute("quartoForm") QuartoForm quartoForm, BindingResult bindingResult, Map<String, Object> model) throws UnsupportedEncodingException {
+    public String criarQuarto(@Valid @ModelAttribute("quartoForm") QuartoForm quartoForm, BindingResult bindingResult) {
+
         // verifica se tem erros
         if (bindingResult.hasErrors()) {
-            StringBuilder stringBuilder = new StringBuilder();
-
-            // busca todos os erros
-            List<FieldError> fieldErrorList = bindingResult.getFieldErrors();
-            fieldErrorList.forEach(f -> {
-                // busca todas as mensagens de erros em uma string separados por um '@' (serve para fazer um split e iterar sobre)
-                stringBuilder.append(f.getDefaultMessage() + "@");
-            });
-
-            // converte a string para uma url com encode utf-8
-            String url = URLEncoder.encode(stringBuilder.toString(), "UTF-8");
-
-            return "redirect:/admin/" + quartoForm.getHospedaria() + "/" + quartoForm.getCasa() + "/quartos?formError=" + url;
+            return ValidacaoForm.getUrlErrorMsg(bindingResult);
         }
 
         quartoService.novoQuarto(quartoForm);
@@ -66,10 +56,19 @@ public class QuartoController {
     @GetMapping("/{quarto}/editar")
     @PreAuthorize("hasRole('HOSPEDARIA') && hasRole('EDITAR_HOSPEDARIA')")
     public String editarQuarto(@PathVariable("quarto") String quarto, Map<String, Object> model) {
-        Quarto quartoObj = quartoService.buscarPorId(Long.parseLong(quarto));
 
-        if (quartoObj != null) {
-            model.put("quarto", quartoObj);
+        Long quartoId = null;
+
+        try {
+            quartoId = Long.parseLong(quarto);
+        } catch (NumberFormatException e) {
+            return "error/400";
+        }
+
+        Optional<Quarto> quartoOptional = Optional.ofNullable(quartoService.buscarPorId(quartoId));
+
+        if (quartoOptional.isPresent()) {
+            model.put("quarto", quartoOptional.get());
 
             return "quarto/editar";
         }
@@ -79,22 +78,11 @@ public class QuartoController {
 
     @PostMapping("/{quarto}/editar")
     @PreAuthorize("hasRole('HOSPEDARIA') && hasRole('EDITAR_HOSPEDARIA')")
-    public String editarQuarto(@Valid @ModelAttribute("quartoForm") QuartoForm quartoForm, BindingResult bindingResult, @PathVariable("quarto") String quarto) throws UnsupportedEncodingException {
+    public String editarQuarto(@Valid @ModelAttribute("quartoForm") QuartoForm quartoForm, BindingResult bindingResult, @PathVariable("quarto") String quarto) {
+
         // verifica se tem erros
         if (bindingResult.hasErrors()) {
-            StringBuilder stringBuilder = new StringBuilder();
-
-            // busca todos os erros
-            List<FieldError> fieldErrorList = bindingResult.getFieldErrors();
-            fieldErrorList.forEach(f -> {
-                // busca todas as mensagens de erros em uma string separados por um '@' (serve para fazer um split e iterar sobre)
-                stringBuilder.append(f.getDefaultMessage() + "@");
-            });
-
-            // converte a string para uma url com encode utf-8
-            String url = URLEncoder.encode(stringBuilder.toString(), "UTF-8");
-
-            return "redirect:/quarto/" + quarto + "/editar?formError=" + url;
+            return ValidacaoForm.getUrlErrorMsg(bindingResult);
         }
 
         quartoService.atualizarQuarto(quartoForm);
@@ -105,12 +93,23 @@ public class QuartoController {
     @PostMapping("/{quarto}/excluir")
     @PreAuthorize("hasRole('HOSPEDARIA') && hasRole('EXCLUIR_HOSPEDARIA')")
     public String excluir(@PathVariable("quarto") String quarto) {
-        Quarto quartoObj = quartoService.buscarPorId(Long.parseLong(quarto));
 
-        if (quartoObj != null) {
-            quartoService.excluir(Long.parseLong(quarto));
+        Long quartoId = null;
 
-            return "redirect:/admin/" + quartoObj.getCasa().getHospedaria().getId() + "/" + quartoObj.getCasa().getId() + "/quartos?excluido";
+        try {
+            quartoId = Long.parseLong(quarto);
+        } catch (NumberFormatException e) {
+            return "error/400";
+        }
+
+
+        Optional<Quarto> quartoOptional = Optional.ofNullable(quartoService.buscarPorId(quartoId));
+
+        if (quartoOptional.isPresent()) {
+            Quarto temp = quartoOptional.get();
+            quartoService.excluir(temp.getId());
+
+            return "redirect:/admin/" + temp.getCasa().getHospedaria().getId() + "/" + temp.getCasa().getId() + "/quartos?excluido";
         }
 
         return "error/404";

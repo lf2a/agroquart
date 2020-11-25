@@ -22,7 +22,7 @@ public class QuartoForm {
     @NotNull(message = "A capacidade é obrigatório")
     @Min(value = 1, message = "A capacidade do quarto deve ser maior que 0")
     @Max(value = 99999999, message = "A capacidade do quarto deve ser menor que 1 milhão")
-    private int capacidade;
+    private Long capacidade;
 
     @NotNull(message = "O id da casa é obrigatório")
     @Min(value = 1, message = "O id da casa deve ser maior que 0")
@@ -42,11 +42,11 @@ public class QuartoForm {
         this.id = id;
     }
 
-    public int getCapacidade() {
+    public Long getCapacidade() {
         return capacidade;
     }
 
-    public void setCapacidade(int capacidade) {
+    public void setCapacidade(Long capacidade) {
         this.capacidade = capacidade;
     }
 

@@ -32,7 +32,7 @@ public class Quarto {
     private Long id;
 
     @Column(name = "capacidade")
-    private int capacidade;
+    private Long capacidade;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "casa_id")
@@ -44,7 +44,7 @@ public class Quarto {
     public Quarto() {
     }
 
-    public Quarto(long id, int capacidade, Casa casa, List<Reserva> reservas) {
+    public Quarto(long id, Long capacidade, Casa casa, List<Reserva> reservas) {
         this.id = id;
         this.capacidade = capacidade;
         this.casa = casa;
@@ -59,11 +59,11 @@ public class Quarto {
         this.id = id;
     }
 
-    public int getCapacidade() {
+    public Long getCapacidade() {
         return capacidade;
     }
 
-    public void setCapacidade(int capacidade) {
+    public void setCapacidade(Long capacidade) {
         this.capacidade = capacidade;
     }
 
