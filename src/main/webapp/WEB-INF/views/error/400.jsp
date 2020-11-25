@@ -9,7 +9,5 @@
 </head>
 <body>
 400 bad request
-<br>
-parametro invalido: ${hospedaria}
 </body>
 </html>
