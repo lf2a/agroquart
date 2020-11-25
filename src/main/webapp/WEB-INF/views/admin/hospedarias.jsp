@@ -47,30 +47,30 @@
                         <sec:csrfInput/>
                         <button type="submit">excluir</button>
                     </form>
-                    <ul> <%-- TODO: decidir se esta sublista vai ser renderizada --%>
-                        <c:forEach items="${hospedaria.casas}" var="casa">
-                            <li>Número da casa: <a
-                                    href="${pageContext.request.contextPath}/admin/${hospedaria.id}/${casa.id}/quartos">${casa.numero}</a>
-                                <a href="${pageContext.request.contextPath}/casa/${casa.id}/editar">editar</a>
-                                <form action="${pageContext.request.contextPath}/casa/${casa.id}/excluir" method="post">
-                                    <sec:csrfInput/>
-                                    <button type="submit">excluir</button>
-                                </form>
-                                <ul>
-                                    <c:forEach items="${casa.quartos}" var="quarto">
-                                        <li>Capacidade do quarto: ${quarto.capacidade}
-                                            <a href="${pageContext.request.contextPath}/quarto/${quarto.id}/editar">editar</a>
-                                            <form action="${pageContext.request.contextPath}/quarto/${quarto.id}/excluir"
-                                                  method="post">
-                                                <sec:csrfInput/>
-                                                <button type="submit">excluir</button>
-                                            </form>
-                                        </li>
-                                    </c:forEach>
-                                </ul>
-                            </li>
-                        </c:forEach>
-                    </ul>
+<%--                    <ul> &lt;%&ndash; TODO: decidir se esta sublista vai ser renderizada &ndash;%&gt;--%>
+<%--                        <c:forEach items="${hospedaria.casas}" var="casa">--%>
+<%--                            <li>Número da casa: <a--%>
+<%--                                    href="${pageContext.request.contextPath}/admin/${hospedaria.id}/${casa.id}/quartos">${casa.numero}</a>--%>
+<%--                                <a href="${pageContext.request.contextPath}/casa/${casa.id}/editar">editar</a>--%>
+<%--                                <form action="${pageContext.request.contextPath}/casa/${casa.id}/excluir" method="post">--%>
+<%--                                    <sec:csrfInput/>--%>
+<%--                                    <button type="submit">excluir</button>--%>
+<%--                                </form>--%>
+<%--                                <ul>--%>
+<%--                                    <c:forEach items="${casa.quartos}" var="quarto">--%>
+<%--                                        <li>Capacidade do quarto: ${quarto.capacidade}--%>
+<%--                                            <a href="${pageContext.request.contextPath}/quarto/${quarto.id}/editar">editar</a>--%>
+<%--                                            <form action="${pageContext.request.contextPath}/quarto/${quarto.id}/excluir"--%>
+<%--                                                  method="post">--%>
+<%--                                                <sec:csrfInput/>--%>
+<%--                                                <button type="submit">excluir</button>--%>
+<%--                                            </form>--%>
+<%--                                        </li>--%>
+<%--                                    </c:forEach>--%>
+<%--                                </ul>--%>
+<%--                            </li>--%>
+<%--                        </c:forEach>--%>
+<%--                    </ul>--%>
                 </li>
             </c:forEach>
         </ul>
