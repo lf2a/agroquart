@@ -41,7 +41,7 @@ public class HospedariaController {
 
         // verifica se tem erros
         if (bindingResult.hasErrors()) {
-            return ValidacaoForm.getUrlErrorMsg(bindingResult);
+            return "redirect:/admin/hospedarias?formError=" + ValidacaoForm.getUrlErrorMsg(bindingResult);
         }
 
         hospedariaService.novaHospedaria(hospedariaForm);
@@ -72,7 +72,7 @@ public class HospedariaController {
 
         // verifica se tem erros
         if (bindingResult.hasErrors()) {
-            return ValidacaoForm.getUrlErrorMsg(bindingResult);
+            return "redirect:/hospedaria/" + hospedaria + "/editar?formError=" + ValidacaoForm.getUrlErrorMsg(bindingResult);
         }
 
         hospedariaService.atualizarHospedaria(hospedariaForm);

@@ -3,13 +3,12 @@ package br.com.agropalma.agroquart.web;
 import br.com.agropalma.agroquart.domain.Quarto;
 import br.com.agropalma.agroquart.service.QuartoService;
 import br.com.agropalma.agroquart.web.form.QuartoForm;
-
 import br.com.agropalma.agroquart.web.validation.ValidacaoForm;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,9 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -45,7 +41,7 @@ public class QuartoController {
 
         // verifica se tem erros
         if (bindingResult.hasErrors()) {
-            return ValidacaoForm.getUrlErrorMsg(bindingResult);
+            return "redirect:/admin/" + quartoForm.getHospedaria() + "/" + quartoForm.getCasa() + "/quartos?formError=" + ValidacaoForm.getUrlErrorMsg(bindingResult);
         }
 
         quartoService.novoQuarto(quartoForm);
@@ -82,7 +78,7 @@ public class QuartoController {
 
         // verifica se tem erros
         if (bindingResult.hasErrors()) {
-            return ValidacaoForm.getUrlErrorMsg(bindingResult);
+            return "redirect:/quarto/" + quarto + "/editar?formError=" + ValidacaoForm.getUrlErrorMsg(bindingResult);
         }
 
         quartoService.atualizarQuarto(quartoForm);

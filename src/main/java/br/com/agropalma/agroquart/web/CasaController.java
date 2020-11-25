@@ -41,7 +41,7 @@ public class CasaController {
 
         // verifica se tem erros
         if (bindingResult.hasErrors()) {
-            return ValidacaoForm.getUrlErrorMsg(bindingResult);
+            return "redirect:/admin/" + casaForm.getHospedaria() + "/casas?formError=" + ValidacaoForm.getUrlErrorMsg(bindingResult);
         }
 
         casaService.novaCasa(casaForm);
@@ -78,7 +78,7 @@ public class CasaController {
 
         // verifica se tem erros
         if (bindingResult.hasErrors()) {
-            return ValidacaoForm.getUrlErrorMsg(bindingResult);
+            return "redirect:/casa/" + casa + "/editar?formError=" + ValidacaoForm.getUrlErrorMsg(bindingResult);
         }
 
         casaService.atualizarCasa(casaForm);
