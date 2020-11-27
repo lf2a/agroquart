@@ -10,7 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * <h1>Reserva.java</h1>
@@ -45,10 +45,10 @@ public class Reserva {
     private String empresa;
 
     @Column(name = "data_inicio")
-    private Date dataInicio;
+    private LocalDateTime dataInicio;
 
     @Column(name = "data_termino")
-    private Date dataTermino;
+    private LocalDateTime dataTermino;
 
     @Column(name = "motivo")
     private String motivo;
@@ -59,15 +59,15 @@ public class Reserva {
     @Column(name = "arquivar")
     private boolean arquivar;
 
-    @Column(name = "privado")
-    private boolean privado;
+    @Column(name = "cargo")
+    private String cargo;
 
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "quarto_id")
     private Quarto quarto;
 
     @Column(name = "criada_em")
-    private Date criadaEm;
+    private LocalDateTime criadaEm;
 
     public static class Builder {
 
@@ -77,14 +77,14 @@ public class Reserva {
         private String gerenteResponsavel;
         private String email;
         private String empresa;
-        private Date dataInicio;
-        private Date dataTermino;
+        private LocalDateTime dataInicio;
+        private LocalDateTime dataTermino;
         private String motivo;
         private boolean autorizada;
         private boolean arquivar;
-        private boolean privado;
+        private String cargo;
         private Quarto quarto;
-        private Date criadaEm;
+        private LocalDateTime criadaEm;
 
         public Builder() {
             this.id = null;
@@ -124,12 +124,12 @@ public class Reserva {
             return this;
         }
 
-        public Builder dataInicio(Date dataInicio) {
+        public Builder dataInicio(LocalDateTime dataInicio) {
             this.dataInicio = dataInicio;
             return this;
         }
 
-        public Builder dataTermino(Date dataTermino) {
+        public Builder dataTermino(LocalDateTime dataTermino) {
             this.dataTermino = dataTermino;
             return this;
         }
@@ -149,8 +149,8 @@ public class Reserva {
             return this;
         }
 
-        public Builder privado(boolean privado) {
-            this.privado = privado;
+        public Builder cargo(String cargo) {
+            this.cargo = cargo;
             return this;
         }
 
@@ -159,7 +159,7 @@ public class Reserva {
             return this;
         }
 
-        public Builder criadaEm(Date date) {
+        public Builder criadaEm(LocalDateTime criadaEm) {
             this.criadaEm = criadaEm;
             return this;
         }
@@ -184,7 +184,7 @@ public class Reserva {
         motivo = builder.motivo;
         autorizada = builder.autorizada;
         arquivar = builder.arquivar;
-        privado = builder.privado;
+        cargo = builder.cargo;
         quarto = builder.quarto;
         criadaEm = builder.criadaEm;
     }
@@ -237,19 +237,19 @@ public class Reserva {
         this.empresa = empresa;
     }
 
-    public Date getDataInicio() {
+    public LocalDateTime getDataInicio() {
         return dataInicio;
     }
 
-    public void setDataInicio(Date dataInicio) {
+    public void setDataInicio(LocalDateTime dataInicio) {
         this.dataInicio = dataInicio;
     }
 
-    public Date getDataTermino() {
+    public LocalDateTime getDataTermino() {
         return dataTermino;
     }
 
-    public void setDataTermino(Date dataTermino) {
+    public void setDataTermino(LocalDateTime dataTermino) {
         this.dataTermino = dataTermino;
     }
 
@@ -277,12 +277,12 @@ public class Reserva {
         this.arquivar = arquivar;
     }
 
-    public boolean isPrivado() {
-        return privado;
+    public String getCargo() {
+        return cargo;
     }
 
-    public void setPrivado(boolean privado) {
-        this.privado = privado;
+    public void setCargo(String cargo) {
+        this.cargo = cargo;
     }
 
     public Quarto getQuarto() {
@@ -293,11 +293,11 @@ public class Reserva {
         this.quarto = quarto;
     }
 
-    public Date getCriadaEm() {
+    public LocalDateTime getCriadaEm() {
         return criadaEm;
     }
 
-    public Reserva setCriadaEm(Date criadaEm) {
+    public Reserva setCriadaEm(LocalDateTime criadaEm) {
         this.criadaEm = criadaEm;
         return this;
     }
@@ -316,7 +316,7 @@ public class Reserva {
                 ", motivo='" + motivo + '\'' +
                 ", autorizada=" + autorizada +
                 ", arquivar=" + arquivar +
-                ", privado=" + privado +
+                ", cargo=" + cargo +
                 ", quarto=" + quarto +
                 ", criadaEm=" + criadaEm +
                 '}';

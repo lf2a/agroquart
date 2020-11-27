@@ -14,7 +14,6 @@ import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Date;
 
 /**
  * <h1>ReservaForm.java</h1>
@@ -179,11 +178,19 @@ public class ReservaForm {
         return LocalDateTime.of(localDate, localTime);
     }
 
+    public LocalDateTime getDateTimeInicio() {
+        return LocalDateTime.of(dataInicio, horaInicio);
+    }
+
+    public LocalDateTime getDateTimeTermino() {
+        return LocalDateTime.of(dataTermino, horaTermino);
+    }
+
     public boolean isValidDates() {
         var inicio = getLocalDateTime(dataInicio, horaInicio);
         var termino = getLocalDateTime(dataTermino, horaTermino);
 
-        return inicio.isBefore(termino) || inicio.isEqual(termino);
+        return termino.isBefore(inicio) || inicio.isEqual(termino);
     }
 
     @Override

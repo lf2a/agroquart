@@ -103,4 +103,6 @@ public class AdminController {
 
         return "admin/quartos";
     }
+
+    // TODO: get - ver todas as reservas, incluir filtros para a busca
 }
