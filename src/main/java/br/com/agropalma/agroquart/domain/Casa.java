@@ -37,6 +37,9 @@ public class Casa {
     @Column(name = "tipo")
     private boolean tipo;
 
+    @Column(name = "sexo")
+    private boolean sexo;
+
     @Column(name = "terceirizado")
     private boolean terceirizado;
 
@@ -50,9 +53,10 @@ public class Casa {
     public Casa() {
     }
 
-    public Casa(long numero, boolean tipo, boolean terceirizado, Hospedaria hospedaria) {
+    public Casa(Long numero, boolean tipo, boolean sexo, boolean terceirizado, Hospedaria hospedaria) {
         this.numero = numero;
         this.tipo = tipo;
+        this.sexo = sexo;
         this.terceirizado = terceirizado;
         this.hospedaria = hospedaria;
     }
@@ -80,6 +84,14 @@ public class Casa {
 
     public void setTipo(boolean tipo) {
         this.tipo = tipo;
+    }
+
+    public boolean isSexo() {
+        return sexo;
+    }
+
+    public void setSexo(boolean sexo) {
+        this.sexo = sexo;
     }
 
     public boolean isTerceirizado() {
@@ -117,6 +129,7 @@ public class Casa {
                 "id=" + numero +
                 ", numero=" + numero +
                 ", tipo='" + tipo + '\'' +
+                ", sexo='" + sexo + '\'' +
                 ", terceirizado=" + terceirizado +
                 ", hospedaria=" + hospedaria +
                 '}';

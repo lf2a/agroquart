@@ -30,6 +30,11 @@
         <option value="0" ${casa.tipo ? "selected" : ""}>Hospedagem temporária</option>
         <option value="1" ${casa.tipo ? "selected" : ""}>Hospedagem de tempo indeterminado</option>
     </select>
+
+    <select name="sexo" id="">
+        <option value="0" ${casa.sexo ? "selected" : ""}>Masculino</option>
+        <option value="1" ${casa.sexo ? "selected" : ""}>Feminino</option>
+    </select>
     <label for="terceirizado">terceirizado</label>
     <input type="checkbox" name="terceirizado" id="terceirizado" ${casa.terceirizado ? "checked" : ""}>
     <input type="hidden" name="hospedaria" id="" placeholder="id da hospedaria"

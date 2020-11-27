@@ -57,16 +57,16 @@ INSERT INTO `hospedaria` (`id`, `nome_hospedaria`) VALUES ('2', 'Hospedaria 2');
 INSERT INTO `hospedaria` (`id`, `nome_hospedaria`) VALUES ('3', 'Hospedaria 3');
 
 -- tabela casa (tipo: 0 temporario, 1 fixo)
-INSERT INTO `casa` (`id`, `numero`, `tipo`, `terceirizado`, `hospedaria_id`) VALUES ('1', '1', '0', '0', 1);
-INSERT INTO `casa` (`id`, `numero`, `tipo`, `terceirizado`, `hospedaria_id`) VALUES ('2', '2', '0', '1', 1);
-INSERT INTO `casa` (`id`, `numero`, `tipo`, `terceirizado`, `hospedaria_id`) VALUES ('3', '3', '0', '0', 1);
+INSERT INTO `casa` (`id`, `numero`, `tipo`, `sexo`, `terceirizado`, `hospedaria_id`) VALUES ('1', '1', '0', '0', '0', 1);
+INSERT INTO `casa` (`id`, `numero`, `tipo`, `sexo`, `terceirizado`, `hospedaria_id`) VALUES ('2', '2', '0', '0', '1', 1);
+INSERT INTO `casa` (`id`, `numero`, `tipo`, `sexo`, `terceirizado`, `hospedaria_id`) VALUES ('3', '3', '0', '0', '0', 1);
 
-INSERT INTO `casa` (`id`, `numero`, `tipo`, `terceirizado`, `hospedaria_id`) VALUES ('4', '1', '0', '0', 2);
-INSERT INTO `casa` (`id`, `numero`, `tipo`, `terceirizado`, `hospedaria_id`) VALUES ('5', '2', '0', '1', 2);
+INSERT INTO `casa` (`id`, `numero`, `tipo`, `sexo`, `terceirizado`, `hospedaria_id`) VALUES ('4', '1', '0', '1', '0', 2);
+INSERT INTO `casa` (`id`, `numero`, `tipo`, `sexo`, `terceirizado`, `hospedaria_id`) VALUES ('5', '2', '0', '1', '1', 2);
 
-INSERT INTO `casa` (`id`, `numero`, `tipo`, `terceirizado`, `hospedaria_id`) VALUES ('6', '1', '1', '0', 3);
-INSERT INTO `casa` (`id`, `numero`, `tipo`, `terceirizado`, `hospedaria_id`) VALUES ('7', '2', '1', '0', 3);
-INSERT INTO `casa` (`id`, `numero`, `tipo`, `terceirizado`, `hospedaria_id`) VALUES ('8', '3', '1', '0', 3);
+INSERT INTO `casa` (`id`, `numero`, `tipo`, `sexo`, `terceirizado`, `hospedaria_id`) VALUES ('6', '1', '1', '0', '0', 3);
+INSERT INTO `casa` (`id`, `numero`, `tipo`, `sexo`, `terceirizado`, `hospedaria_id`) VALUES ('7', '2', '1', '0', '0', 3);
+INSERT INTO `casa` (`id`, `numero`, `tipo`, `sexo`, `terceirizado`, `hospedaria_id`) VALUES ('8', '3', '1', '0', '0', 3);
 
 -- tabela quarto
 INSERT INTO `quarto` (`id`, `capacidade`, `casa_id`) VALUES ('1', '2', '1');
@@ -82,9 +82,9 @@ INSERT INTO `quarto` (`id`, `capacidade`, `casa_id`) VALUES ('7', '2', '4');
 INSERT INTO `quarto` (`id`, `capacidade`, `casa_id`) VALUES ('8', '3', '4');
 
 INSERT INTO `quarto` (`id`, `capacidade`, `casa_id`) VALUES ('9', '3', '5');
-INSERT INTO `quarto` (`id`, `capacidade`, `casa_id`) VALUES ('10', '2', '5');
+INSERT INTO `quarto` (`id`, `capacidade`, `casa, `sexo_id`) VALUES ('10', '2', '5');
 
-INSERT INTO `quarto` (`id`, `capacidade`, `casa_id`) VALUES ('11', '2', '6');
+INSERT INTO `quarto` (`id` '0,, `capacidade`, `casa_id`) VALUES ('11', '2', '6');
 INSERT INTO `quarto` (`id`, `capacidade`, `casa_id`) VALUES ('12', '3', '6');
 
 INSERT INTO `quarto` (`id`, `capacidade`, `casa_id`) VALUES ('13', '2', '7');
@@ -94,11 +94,11 @@ INSERT INTO `quarto` (`id`, `capacidade`, `casa_id`) VALUES ('15', '2', '8');
 INSERT INTO `quarto` (`id`, `capacidade`, `casa_id`) VALUES ('16', '2', '8');
 
 -- tabela reserva
-INSERT INTO `reserva` (`id`, `quarto_id`, `gerente_responsavel`, `nome_completo`, `matricula`, `email`, `empresa`, `data_inicio`, `data_termino`, `motivo`, `autorizada`, `arquivar`, `privado`) 
-VALUES ('1', '1', 'Jose Silva', 'Ana Paula', '67890', 'ana@email.com', 'INSS', '2020-01-01 10:00:00', '2020-01-10 10:00:00', 'Fazer vistoria nos maquinários', '0', '0', '1');
+INSERT INTO `reserva` (`id`, `quarto_id`, `gerente_responsavel`, `nome_completo`, `matricula`, `email`, `empresa`, `data_inicio`, `data_termino`, `motivo`, `autorizada`, `arquivar`, `cargo`)
+VALUES ('1', '1', 'Jose Silva', 'Ana Paula', '67890', 'ana@email.com', 'INSS', '2020-01-01 10:00:00', '2020-01-10 10:00:00', 'Fazer vistoria nos maquinários', '0', '0', 'Analista de sistemas');
 
-INSERT INTO `reserva` (`id`, `quarto_id`, `gerente_responsavel`, `nome_completo`, `matricula`, `email`, `empresa`, `data_inicio`, `data_termino`, `motivo`, `autorizada`, `arquivar`, `privado`) 
-VALUES ('2', '5', 'Jose Silva', 'Ana Paula', '67890', 'ana@email.com', 'INSS', '2020-01-15 10:00:00', '2020-01-25 10:00:00', 'Fazer manutenção nos maquinarios', '0', '0', '0');
+INSERT INTO `reserva` (`id`, `quarto_id`, `gerente_responsavel`, `nome_completo`, `matricula`, `email`, `empresa`, `data_inicio`, `data_termino`, `motivo`, `autorizada`, `arquivar`, `cargo`)
+VALUES ('2', '5', 'Jose Silva', 'Ana Paula', '67890', 'ana@email.com', 'INSS', '2020-01-15 10:00:00', '2020-01-25 10:00:00', 'Fazer manutenção nos maquinarios', '0', '0', 'Tecnica de informática');
 
-INSERT INTO `reserva` (`id`, `quarto_id`, `gerente_responsavel`, `nome_completo`, `matricula`, `email`, `empresa`, `data_inicio`, `data_termino`, `motivo`, `autorizada`, `arquivar`, `privado`) 
-VALUES ('3', '3', 'Leticia Santos', 'Carlos Costa', '65643', 'carlos@email.com', 'Google', '2020-04-01 10:00:00', '2020-04-05 10:00:00', 'Fazer vistoria nos computadores', '0', '0', '0');
+INSERT INTO `reserva` (`id`, `quarto_id`, `gerente_responsavel`, `nome_completo`, `matricula`, `email`, `empresa`, `data_inicio`, `data_termino`, `motivo`, `autorizada`, `arquivar`, `cargo`)
+VALUES ('3', '3', 'Leticia Santos', 'Carlos Costa', '65643', 'carlos@email.com', 'Google', '2020-04-01 10:00:00', '2020-04-05 10:00:00', 'Fazer vistoria nos computadores', '0', '0', 'Engenheiro civil');

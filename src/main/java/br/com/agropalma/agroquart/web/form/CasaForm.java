@@ -25,7 +25,11 @@ public class CasaForm {
     @Max(value = 99999999, message = "O numero da casa deve ser menor que 1 milhão")
     private Long numero;
 
+    @NotNull(message = "O tipo da casa é obrigatório")
     private boolean tipo;
+
+    @NotNull(message = "O sexo da casa é obrigatório")
+    private boolean sexo;
 
     private boolean terceirizado;
 
@@ -61,6 +65,14 @@ public class CasaForm {
         return this;
     }
 
+    public boolean isSexo() {
+        return sexo;
+    }
+
+    public void setSexo(boolean sexo) {
+        this.sexo = sexo;
+    }
+
     public boolean isTerceirizado() {
         return terceirizado;
     }
@@ -85,6 +97,7 @@ public class CasaForm {
                 "id=" + id +
                 ", numero=" + numero +
                 ", tipo=" + tipo +
+                ", sexo=" + sexo +
                 ", terceirizado=" + terceirizado +
                 ", hospedaria=" + hospedaria +
                 '}';

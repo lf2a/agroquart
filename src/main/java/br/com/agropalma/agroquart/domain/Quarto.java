@@ -38,7 +38,7 @@ public class Quarto {
     @JoinColumn(name = "casa_id")
     private Casa casa;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "quarto", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "quarto", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private List<Reserva> reservas;
 
     public Quarto() {
