@@ -314,10 +314,26 @@ public class Reserva {
         return dataInicio.format(formatter);
     }
 
+    public String getStringDataInicio() {
+        return dataInicio.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+    }
+
+    public String getStringHoraInicio() {
+        return dataInicio.format(DateTimeFormatter.ofPattern("hh:mm"));
+    }
+
     public String getDataTerminoFormatada() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd 'de' MMMM 'de' yyyy HH'h':mm'm'");
 
         return dataTermino.format(formatter);
+    }
+
+    public String getStringDataTermino() {
+        return dataTermino.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+    }
+
+    public String getStringHoraTermino() {
+        return dataTermino.format(DateTimeFormatter.ofPattern("hh:mm"));
     }
 
     public String getCriadaEmFormatada() {

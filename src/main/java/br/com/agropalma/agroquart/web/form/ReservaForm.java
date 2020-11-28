@@ -25,6 +25,8 @@ import java.time.LocalTime;
  */
 public class ReservaForm {
 
+    private Long id;
+
     @NotNull(message = "O campo nome completo é obrigatório")
     @Size(min = 1, message = "O campo nome completo é obrigatório")
     private String nomeCompleto;
@@ -77,6 +79,14 @@ public class ReservaForm {
 
     @NotNull(message = "O tipo da reserva é obrigatório")
     private Long tipoReserva;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getNomeCompleto() {
         return nomeCompleto;
@@ -190,7 +200,7 @@ public class ReservaForm {
         var inicio = getLocalDateTime(dataInicio, horaInicio);
         var termino = getLocalDateTime(dataTermino, horaTermino);
 
-        return termino.isBefore(inicio) || inicio.isEqual(termino);
+        return termino.isAfter(inicio) || inicio.isEqual(termino);
     }
 
     @Override

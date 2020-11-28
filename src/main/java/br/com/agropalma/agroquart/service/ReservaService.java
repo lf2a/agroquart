@@ -46,6 +46,17 @@ public class ReservaService {
         // TODO: enviar email para quem solicitou e para os admins que tem permissão de reservar.
     }
 
+    @Transactional
+    public void atualizarReserva(ReservaForm reservaForm) {
+        Reserva reserva = buscarPorId(reservaForm.getId());
+        reserva.setDataInicio(reservaForm.getDateTimeInicio());
+        reserva.setDataTermino(reservaForm.getDateTimeTermino());
+
+        reservaRepository.salvarOuAtualizar(reserva);
+
+        // TODO: enviar email para quem solicitou e para os admins que tem permissão de reservar.
+    }
+
     @Transactional(readOnly = true)
     public List<Reserva> buscarReservasAutorizadas(boolean autorizada) {
         return reservaRepository.buscarReservasAutorizadas(autorizada);
@@ -58,6 +69,11 @@ public class ReservaService {
 
     @Transactional(readOnly = true)
     public List<Reserva> buscarReservasEmAndamento() {
-        return  reservaRepository.buscarReservasEmAndamento();
+        return reservaRepository.buscarReservasEmAndamento();
+    }
+
+    @Transactional(readOnly = true)
+    public Reserva buscarPorId(Long id) {
+        return reservaRepository.buscarPorId(id);
     }
 }

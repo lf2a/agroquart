@@ -79,7 +79,7 @@
                         </td>
                     </c:if>
                     <sec:authorize access="hasAnyAuthority('ROLE_EDITAR_RESERVA')">
-                        <td><a href="${pageContext.request.contextPath}">editar</a></td>
+                        <td><a href="${pageContext.request.contextPath}/reserva/${r.id}/editar">editar</a></td>
                     </sec:authorize>
                     <sec:authorize access="hasAnyAuthority('ROLE_EXCLUIR_RESERVA')">
                         <td>
