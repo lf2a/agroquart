@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -45,12 +46,41 @@ public class ReservaControllerTests {
     private ReservaService reservaService;
 
     @Test
-    public void testAdicionarCasa() throws Exception {
+    public void testAdicionarReserva() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders.post("/reserva")
                 .with(SecurityMockMvcRequestPostProcessors.csrf())
                 .content("")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .accept(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection());
+    }
+
+    @Test
+    @WithMockUser(roles = {"RESERVA", "EDITAR_RESERVA"})
+    public void testAcessoFormEditarReserva() throws Exception {
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/reserva/1/editar")) // /reserva/{reserva id}/editar
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    @WithMockUser(roles = {"RESERVA", "EDITAR_RESERVA"})
+    public void testAlterarReserva() throws Exception {
+        this.mockMvc.perform(MockMvcRequestBuilders.post("/reserva/1/editar")
+                .with(SecurityMockMvcRequestPostProcessors.csrf())
+                .content("id=3&nomeCompleto=Carlos+Costa&matricula=65643&gerenteResponsavel=Leticia+Santos&email=carlos%40email.com&cargo=Engenheiro+civil&dataInicio=2020-11-29&horaInicio=10%3A00&dataTermino=2020-11-30&horaTermino=10%3A00&motivo=Fazer+vistoria+nos+computadores")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .accept(MediaType.APPLICATION_FORM_URLENCODED))
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection());
+    }
+
+    @Test
+    @WithMockUser(roles = {"RESERVA", "EXCLUIR_RESERVA"})
+    public void testExcluirReserva() throws Exception {
+        this.mockMvc.perform(MockMvcRequestBuilders.post("/reserva/1/excluir?filtro=reservas")
+                .with(SecurityMockMvcRequestPostProcessors.csrf())
+                .content("")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .accept(MediaType.APPLICATION_FORM_URLENCODED))
+                .andExpect(MockMvcResultMatchers.status().isOk());
     }
 }
