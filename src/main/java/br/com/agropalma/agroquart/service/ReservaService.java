@@ -78,4 +78,9 @@ public class ReservaService {
     public Reserva buscarPorId(Long id) {
         return reservaRepository.buscarPorId(id);
     }
+
+    @Transactional
+    public void excluir(Long id) {
+        reservaRepository.excluir(id);
+    }
 }

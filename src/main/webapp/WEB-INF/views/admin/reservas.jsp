@@ -11,6 +11,11 @@
     <title>${tipo}</title>
 </head>
 <body>
+
+<c:if test="${param.excluido == ''}">
+    <p>Excluido com sucesso!</p>
+</c:if>
+
 <a href="${pageContext.request.contextPath}/admin/reservas?filtro=autorizadas">Reservas Autorizadas</a>
 <a href="${pageContext.request.contextPath}/admin/reservas?filtro=nao-autorizadas">Reservas Não Autorizadas</a>
 <a href="${pageContext.request.contextPath}/admin/reservas?filtro=arquivadas">Reservas Arquivadas</a>
@@ -87,7 +92,7 @@
                     </sec:authorize>
                     <sec:authorize access="hasAnyAuthority('ROLE_EXCLUIR_RESERVA')">
                         <td>
-                            <form action="${pageContext.request.contextPath}"
+                            <form action="${pageContext.request.contextPath}/reserva/${r.id}/excluir?filtro=${param.filtro}"
                                   method="post">
                                 <sec:csrfInput/>
                                 <button type="submit">Excluir</button>

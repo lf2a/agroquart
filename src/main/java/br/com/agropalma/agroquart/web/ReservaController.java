@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 import java.util.Map;
@@ -86,8 +87,33 @@ public class ReservaController {
         return "redirect:/reserva/" + reservaId + "/editar?sucesso";
     }
 
-    // TODO: post - arquivar reserva
-    // TODO: post - autorizar reserva (enviar email quando a reserva for autorizada)
     // TODO: post - excluir reserva (cancelar reserva) (enviar email quando a reserva for cancelada, se a reserva estiver arquivada não irá enviar email)
+    @PostMapping("/{reservaId}/excluir")
+    @PreAuthorize("hasRole('RESERVA') && hasRole('EXCLUIR_RESERVA')")
+    public String excluirReserva(@PathVariable("reservaId") String id, @RequestParam("filtro") String filtro) {
+
+        Long reservaId = null;
+
+        try {
+            reservaId = Long.parseLong(id);
+        } catch (NumberFormatException e) {
+            return "error/400";
+        }
+
+        Optional<Reserva> reservaOptional = Optional.ofNullable(reservaService.buscarPorId(reservaId));
+
+        if (reservaOptional.isPresent()) {
+            Reserva temp = reservaOptional.get();
+            reservaService.excluir(temp.getId());
+
+            return "redirect:/admin/reservas?filtro=" + filtro + "&excluido";
+        }
+
+        return "error/404";
+    }
+
+    // TODO: post - arquivar reserva
+    // TODO: post - autorizar reserva (enviar email quando a reserva for autorizada, so vai ser autorizada se o admin já estiver escolhido o quarto)
+    // TODO: get e post - escolher quartos livres
     // TODO: get - gerar relatorio completo com base em trimestres (irá ser criada um controler para relatorios)
 }
