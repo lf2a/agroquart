@@ -45,6 +45,10 @@ olá
     <input type="text" name="gerenteResponsavel" id="" placeholder="Gerente responsavel" required>
     <input type="email" name="email" id="" placeholder="Seu email para contato" required>
     <input type="text" name="cargo" id="" placeholder="Seu cargo" required>
+    <select name="sexo" id="">
+        <option value="homem">Homem</option>
+        <option value="mulher">Mulher</option>
+    </select>
 
     <label for="empresa">Empresa</label>
     <select name="empresa" id="empresa" required>

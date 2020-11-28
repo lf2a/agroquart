@@ -28,18 +28,22 @@
     <input type="hidden" name="id" value="${reserva.id}">
 
     <input type="text" name="nomeCompleto" id="" placeholder="Seu nome completo" value="${reserva.nomeCompleto}"
-           required>
-    <input type="number" name="matricula" id="" placeholder="Sua matricula" value="${reserva.matricula}" required>
+           readonly>
+    <input type="number" name="matricula" id="" placeholder="Sua matricula" value="${reserva.matricula}" readonly>
     <input type="text" name="gerenteResponsavel" id="" placeholder="Gerente responsavel"
-           value="${empty reserva.gerenteResponsavel ? "": reserva.gerenteResponsavel}" required>
-    <input type="email" name="email" id="" placeholder="Seu email para contato" value="${reserva.email}" required>
-    <input type="text" name="cargo" id="" placeholder="Seu cargo" value="${reserva.cargo}" required>
+           value="${empty reserva.gerenteResponsavel ? "": reserva.gerenteResponsavel}" readonly>
+    <input type="email" name="email" id="" placeholder="Seu email para contato" value="${reserva.email}" readonly>
+    <input type="text" name="cargo" id="" placeholder="Seu cargo" value="${reserva.cargo}" readonly>
+    <select name="sexo" id="" disabled>
+        <option value="homem" ${reserva.sexo=="homem" ? "selected": ""}>Homem</option>
+        <option value="mulher" ${reserva.sexo=="mulher" ? "selected": ""}>Mulher</option>
+    </select>
 
     <label for="empresa">Empresa</label>
-    <select name="empresa" id="empresa" required>
-        <option value="Agropalma" ${empty reserva.empresa=="Agropalma" ? "selected": ""}>Agropalma</option>
-        <option value="Xhara" ${empty reserva.empresa=="Xhara" ? "selected": ""}>Xhara</option>
-        <option value="INSS" ${empty reserva.empresa=="INSS" ? "selected": ""}>INSS</option>
+    <select name="empresa" id="empresa" disabled>
+        <option value="Agropalma" ${reserva.empresa=="Agropalma" ? "selected": ""}>Agropalma</option>
+        <option value="Xhara" ${reserva.empresa=="Xhara" ? "selected": ""}>Xhara</option>
+        <option value="INSS" ${reserva.empresa=="INSS" ? "selected": ""}>INSS</option>
     </select>
 
     <label for="datai">Data de inicio</label>
@@ -56,7 +60,6 @@
 
     <textarea name="motivo" id="" cols="30" rows="10" placeholder="Motivo da ida." readonly>${reserva.motivo}</textarea>
 
-    <input type="number" name="tipoReserva" id="" value="1" required>
     <select name="tipoReserva" id="" disabled>
         <option value="0" ${reserva.tipo=="hospedaria" ? "selected": ""}>Hospedagem temporária</option>
         <option value="1" ${reserva.tipo=="alojamento" ? "selected": ""}>Hospedagem de tempo indeterminado</option>

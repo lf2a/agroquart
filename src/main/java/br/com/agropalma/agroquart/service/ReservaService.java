@@ -40,6 +40,7 @@ public class ReservaService {
                 .cargo(reservaForm.getCargo())
                 .criadaEm(LocalDateTime.now().withNano(0))
                 .tipo(reservaForm.getTipoReserva())
+                .sexo(reservaForm.getSexo())
                 .build();
 
         reservaRepository.salvarOuAtualizar(reserva);

@@ -80,6 +80,10 @@ public class ReservaForm {
     @NotNull(message = "O tipo da reserva é obrigatório")
     private String tipoReserva;
 
+    @NotNull(message = "Informe seu sexo")
+    @Size(min = 1, message = "O seu sexo é obrigatório")
+    private String sexo;
+
     public Long getId() {
         return id;
     }
@@ -184,6 +188,14 @@ public class ReservaForm {
         this.tipoReserva = tipoReserva;
     }
 
+    public String getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
+    }
+
     public LocalDateTime getLocalDateTime(LocalDate localDate, LocalTime localTime) {
         return LocalDateTime.of(localDate, localTime);
     }
@@ -217,6 +229,7 @@ public class ReservaForm {
                 ", isValidDates=" + isValidDates() +
                 ", motivo='" + motivo + '\'' +
                 ", tipoReserva=" + tipoReserva +
+                ", sexo=" + sexo +
                 '}';
     }
 }

@@ -35,6 +35,7 @@
                 <th>Email</th>
                 <th>Empresa</th>
                 <th>Cargo</th>
+                <th>Sexo</th>
                 <th>Data de inicio</th>
                 <th>Date de termino</th>
                 <th>Quarto</th>
@@ -42,6 +43,7 @@
                 <th>Foi arquivada?</th>
                 <th>Motivo</th>
                 <th>Solicitada em</th>
+                <th>Tipo da reserva</th>
                 <sec:authorize access="hasAnyAuthority('ROLE_EDITAR_RESERVA', 'ROLE_EXCLUIR_RESERVA')">
                     <th colspan="4">Ação</th>
                 </sec:authorize>
@@ -55,6 +57,7 @@
                     <td>${r.email}</td>
                     <td>${r.empresa}</td>
                     <td>${r.cargo}</td>
+                    <td>${r.sexo}</td>
                     <td>${r.getDataInicioFormatada()}</td>
                     <td>${r.getDataTerminoFormatada()}</td>
                     <td>${empty r.quarto ? "Não escolhido": r.getDescricaoQuarto()}</td>
@@ -62,6 +65,7 @@
                     <td>${r.arquivada ? "sim" : "não"}</td>
                     <td>${r.motivo}</td>
                     <td>${r.getCriadaEmFormatada()}</td>
+                    <td>${r.tipo}</td>
                     <c:if test="${!r.autorizada}">
                         <td>
                             <form action="${pageContext.request.contextPath}/reserva/${r.id}/autorizar" method="post">
