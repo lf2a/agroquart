@@ -82,9 +82,9 @@ INSERT INTO `quarto` (`id`, `capacidade`, `casa_id`) VALUES ('7', '2', '4');
 INSERT INTO `quarto` (`id`, `capacidade`, `casa_id`) VALUES ('8', '3', '4');
 
 INSERT INTO `quarto` (`id`, `capacidade`, `casa_id`) VALUES ('9', '3', '5');
-INSERT INTO `quarto` (`id`, `capacidade`, `casa, `sexo_id`) VALUES ('10', '2', '5');
+INSERT INTO `quarto` (`id`, `capacidade`, `casa_id`) VALUES ('10', '2', '5');
 
-INSERT INTO `quarto` (`id` '0,, `capacidade`, `casa_id`) VALUES ('11', '2', '6');
+INSERT INTO `quarto` (`id`, `capacidade`, `casa_id`) VALUES ('11', '2', '6');
 INSERT INTO `quarto` (`id`, `capacidade`, `casa_id`) VALUES ('12', '3', '6');
 
 INSERT INTO `quarto` (`id`, `capacidade`, `casa_id`) VALUES ('13', '2', '7');
