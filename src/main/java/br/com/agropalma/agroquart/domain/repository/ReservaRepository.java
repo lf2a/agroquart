@@ -64,7 +64,7 @@ public class ReservaRepository implements ICrudRepository<Reserva, Long> {
     public List<Reserva> buscarReservasEmAndamento() {
         Session session = entityManager.unwrap(Session.class);
 
-        Query<Reserva> query = session.createQuery("select r from Reserva r where r.arquivada=false and r.autorizada=true and r.dataInicio <= :hoje order by r.criadaEm desc", Reserva.class);
+        Query<Reserva> query = session.createQuery("select r from Reserva r where r.arquivada=false and r.autorizada=true and r.dataInicio <= :hoje and r.dataTermino > :hoje order by r.criadaEm desc", Reserva.class);
         query.setParameter("hoje", LocalDateTime.now());
 
         return query.getResultList();
