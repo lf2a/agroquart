@@ -19,7 +19,7 @@
 <a href="${pageContext.request.contextPath}/admin/reservas?filtro=autorizadas">Reservas Autorizadas</a>
 <a href="${pageContext.request.contextPath}/admin/reservas?filtro=nao-autorizadas">Reservas Não Autorizadas</a>
 <a href="${pageContext.request.contextPath}/admin/reservas?filtro=arquivadas">Reservas Arquivadas</a>
-<a href="${pageContext.request.contextPath}/admin/reservas?filtro=nao-arquivadas">Reservas Não Arquivadas</a>
+<%--<a href="${pageContext.request.contextPath}/admin/reservas?filtro=nao-arquivadas">Reservas Não Arquivadas</a>--%>
 <a href="${pageContext.request.contextPath}/admin/reservas?filtro=reservas-em-andamento">Reservas Em andamento</a>
 
 <c:choose>

@@ -138,7 +138,7 @@ public class AdminController {
                     model.put("reservas", reservasList);
                     break;
 
-                case "nao-arquivadas":
+                case "nao-arquivadas": // TODO: por enquanto não irá ser usada, decidir um futuro para isso. :)
                     model.put("tipo", "Reservas não arquivadas");
                     reservasList = reservaService.buscarReservasArquivadas(false);
 
