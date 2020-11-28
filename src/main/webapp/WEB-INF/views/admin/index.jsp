@@ -18,5 +18,9 @@
 <sec:authorize access="hasAuthority('ROLE_HOSPEDARIA')">
     <a href="${pageContext.request.contextPath}/admin/hospedarias">Hospedarias</a>
 </sec:authorize>
+
+<sec:authorize access="hasAuthority('ROLE_RESERVA')">
+    <a href="${pageContext.request.contextPath}/admin/reservas">Reservas</a>
+</sec:authorize>
 </body>
 </html>

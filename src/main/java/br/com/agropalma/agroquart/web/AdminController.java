@@ -1,12 +1,11 @@
 package br.com.agropalma.agroquart.web;
 
-import br.com.agropalma.agroquart.domain.Casa;
-import br.com.agropalma.agroquart.domain.Hospedaria;
-import br.com.agropalma.agroquart.domain.Quarto;
+import br.com.agropalma.agroquart.domain.Reserva;
 import br.com.agropalma.agroquart.service.CasaService;
 import br.com.agropalma.agroquart.service.HospedariaService;
 import br.com.agropalma.agroquart.service.PermissaoService;
 import br.com.agropalma.agroquart.service.QuartoService;
+import br.com.agropalma.agroquart.service.ReservaService;
 import br.com.agropalma.agroquart.service.UsuarioService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Map;
@@ -46,6 +46,9 @@ public class AdminController {
 
     @Autowired
     private QuartoService quartoService;
+
+    @Autowired
+    private ReservaService reservaService;
 
     @GetMapping("")
     @PreAuthorize("hasRole('ADMIN')")
@@ -104,5 +107,62 @@ public class AdminController {
         return "admin/quartos";
     }
 
-    // TODO: get - ver todas as reservas, incluir filtros para a busca
+    @GetMapping("/reservas")
+    @PreAuthorize("hasRole('ADMIN') && hasRole('ROLE_RESERVA')")
+    public String reservas(@RequestParam(required = false) String filtro, Map<String, Object> model) {
+
+        Optional<String> filtroOptional = Optional.ofNullable(filtro);
+
+        List<Reserva> reservasList;
+
+        if (filtroOptional.isPresent()) {
+            switch (filtro) {
+                case "autorizadas":
+                    model.put("tipo", "Reservas autorizadas");
+                    reservasList = reservaService.buscarReservasAutorizadas(true);
+
+                    model.put("reservas", reservasList);
+                    break;
+
+                case "nao-autorizadas":
+                    model.put("tipo", "Reservas não autorizadas");
+                    reservasList = reservaService.buscarReservasAutorizadas(false);
+
+                    model.put("reservas", reservasList);
+                    break;
+
+                case "arquivadas":
+                    model.put("tipo", "Reservas arquivadas");
+                    reservasList = reservaService.buscarReservasArquivadas(true);
+
+                    model.put("reservas", reservasList);
+                    break;
+
+                case "nao-arquivadas":
+                    model.put("tipo", "Reservas não arquivadas");
+                    reservasList = reservaService.buscarReservasArquivadas(false);
+
+                    model.put("reservas", reservasList);
+                    break;
+
+                case "reservas-em-andamento":
+                    model.put("tipo", "Reservas em andamento");
+
+                    reservasList = reservaService.buscarReservasEmAndamento();
+
+                    model.put("reservas", reservasList);
+                    break;
+
+                default:
+                    return "error/400"; // valor da query string "filtro" errado, irá lançar um erro de "bad request" 400.
+            }
+
+            return "admin/reservas";
+        }
+
+        model.put("tipo", "Selecione um filtro");
+        model.put("reservas", null);
+
+        return "admin/reservas";
+    }
 }

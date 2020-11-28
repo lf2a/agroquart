@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * <h1>ReservaService.java</h1>
@@ -43,5 +44,20 @@ public class ReservaService {
         reservaRepository.salvarOuAtualizar(reserva);
 
         // TODO: enviar email para quem solicitou e para os admins que tem permissão de reservar.
+    }
+
+    @Transactional(readOnly = true)
+    public List<Reserva> buscarReservasAutorizadas(boolean autorizada) {
+        return reservaRepository.buscarReservasAutorizadas(autorizada);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Reserva> buscarReservasArquivadas(boolean arquivada) {
+        return reservaRepository.buscarReservasArquivadas(arquivada);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Reserva> buscarReservasEmAndamento() {
+        return  reservaRepository.buscarReservasEmAndamento();
     }
 }

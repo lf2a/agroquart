@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * <h1>Reserva.java</h1>
@@ -56,8 +57,8 @@ public class Reserva {
     @Column(name = "autorizada")
     private boolean autorizada;
 
-    @Column(name = "arquivar")
-    private boolean arquivar;
+    @Column(name = "arquivada")
+    private boolean arquivada;
 
     @Column(name = "cargo")
     private String cargo;
@@ -81,7 +82,7 @@ public class Reserva {
         private LocalDateTime dataTermino;
         private String motivo;
         private boolean autorizada;
-        private boolean arquivar;
+        private boolean arquivada;
         private String cargo;
         private Quarto quarto;
         private LocalDateTime criadaEm;
@@ -145,7 +146,7 @@ public class Reserva {
         }
 
         public Builder arquivar(boolean arquivar) {
-            this.arquivar = arquivar;
+            this.arquivada = arquivar;
             return this;
         }
 
@@ -183,7 +184,7 @@ public class Reserva {
         dataTermino = builder.dataTermino;
         motivo = builder.motivo;
         autorizada = builder.autorizada;
-        arquivar = builder.arquivar;
+        arquivada = builder.arquivada;
         cargo = builder.cargo;
         quarto = builder.quarto;
         criadaEm = builder.criadaEm;
@@ -269,12 +270,12 @@ public class Reserva {
         this.autorizada = autorizada;
     }
 
-    public boolean isArquivar() {
-        return arquivar;
+    public boolean isArquivada() {
+        return arquivada;
     }
 
     public void setArquivar(boolean arquivar) {
-        this.arquivar = arquivar;
+        this.arquivada = arquivar;
     }
 
     public String getCargo() {
@@ -302,6 +303,29 @@ public class Reserva {
         return this;
     }
 
+    public String getDescricaoQuarto() {
+        return String.format("Hospedaria: %s - Casa: N°%d - Quarto: N°%d", this.quarto.getCasa().getHospedaria().getNomeHospedaria(),
+                this.quarto.getCasa().getNumero(), this.quarto.getId());
+    }
+
+    public String getDataInicioFormatada() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd 'de' MMMM 'de' yyyy HH'h':mm'm'");
+
+        return dataInicio.format(formatter);
+    }
+
+    public String getDataTerminoFormatada() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd 'de' MMMM 'de' yyyy HH'h':mm'm'");
+
+        return dataTermino.format(formatter);
+    }
+
+    public String getCriadaEmFormatada() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd 'de' MMMM 'de' yyyy HH'h':mm'm'");
+
+        return criadaEm.format(formatter);
+    }
+
     @Override
     public String toString() {
         return "Reserva{" +
@@ -315,7 +339,7 @@ public class Reserva {
                 ", dataTermino=" + dataTermino +
                 ", motivo='" + motivo + '\'' +
                 ", autorizada=" + autorizada +
-                ", arquivar=" + arquivar +
+                ", arquivar=" + arquivada +
                 ", cargo=" + cargo +
                 ", quarto=" + quarto +
                 ", criadaEm=" + criadaEm +

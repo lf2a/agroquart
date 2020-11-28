@@ -43,10 +43,9 @@ public class ReservaController {
     }
 
     // TODO: get - atualizar reserva (ver o html)
-    // TODO: post - atualizar reserva (receber o form)
+    // TODO: post - atualizar reserva (receber o form) (enviar email para quando a reserva form atualizada)
     // TODO: post - arquivar reserva
-    // TODO: post - autorizar reserva
-    // TODO: post - excluir reserva
-    // TODO: get - gerar relatorio completo com base em trimestres
-    // TODO: post - cancelar reserva
+    // TODO: post - autorizar reserva (enviar email quando a reserva for autorizada)
+    // TODO: post - excluir reserva (cancelar reserva) (enviar email quando a reserva for cancelada, se a reserva estiver arquivada não irá enviar email)
+    // TODO: get - gerar relatorio completo com base em trimestres (irá ser criada um controler para relatorios)
 }

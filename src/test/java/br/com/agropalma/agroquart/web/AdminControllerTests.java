@@ -6,6 +6,7 @@ import br.com.agropalma.agroquart.service.CasaService;
 import br.com.agropalma.agroquart.service.HospedariaService;
 import br.com.agropalma.agroquart.service.PermissaoService;
 import br.com.agropalma.agroquart.service.QuartoService;
+import br.com.agropalma.agroquart.service.ReservaService;
 import br.com.agropalma.agroquart.service.UsuarioService;
 
 import org.junit.Test;
@@ -55,6 +56,9 @@ public class AdminControllerTests {
     @MockBean
     private QuartoService quartoService;
 
+    @MockBean
+    private ReservaService reservaService;
+
     @Test
     @WithMockUser(roles = {"ADMIN"})
     public void testAcesso() throws Exception {
@@ -90,5 +94,10 @@ public class AdminControllerTests {
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
-
+    @Test
+    @WithMockUser(roles = {"RESERVA", "ADMIN"})
+    public void testAcessoReservas() throws Exception {
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/admin/reservas"))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
 }

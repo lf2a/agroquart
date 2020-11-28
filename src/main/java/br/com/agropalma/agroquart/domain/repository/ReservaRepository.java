@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -39,6 +40,34 @@ public class ReservaRepository implements ICrudRepository<Reserva, Long> {
     @Override
     public List<Reserva> buscarTodos() {
         return null;
+    }
+
+    public List<Reserva> buscarReservasAutorizadas(boolean autorizada) {
+        // estabelecendo uma sessão
+        Session session = entityManager.unwrap(Session.class);
+
+        Query<Reserva> query = session.createQuery("select r from Reserva r where r.autorizada=:autorizada order by r.criadaEm asc", Reserva.class);
+        query.setParameter("autorizada", autorizada);
+
+        return query.getResultList();
+    }
+
+    public List<Reserva> buscarReservasArquivadas(boolean arquivada) {
+        Session session = entityManager.unwrap(Session.class);
+
+        Query<Reserva> query = session.createQuery("select r from Reserva r where r.arquivada=:arquivada order by r.criadaEm desc", Reserva.class);
+        query.setParameter("arquivada", arquivada);
+
+        return query.getResultList();
+    }
+
+    public List<Reserva> buscarReservasEmAndamento() {
+        Session session = entityManager.unwrap(Session.class);
+
+        Query<Reserva> query = session.createQuery("select r from Reserva r where r.arquivada=false and r.autorizada=true and r.dataInicio <= :hoje order by r.criadaEm desc", Reserva.class);
+        query.setParameter("hoje", LocalDateTime.now());
+
+        return query.getResultList();
     }
 
     @Override
