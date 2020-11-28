@@ -67,8 +67,8 @@ olá
     <textarea name="motivo" id="" cols="30" rows="10" placeholder="Motivo da ida."></textarea>
 
     <select name="tipoReserva" id="">
-        <option value="0">Hospedagem temporária</option>
-        <option value="1">Hospedagem de tempo indeterminado</option>
+        <option value="hospedaria">Hospedagem temporária</option>
+        <option value="alojamento">Hospedagem de tempo indeterminado</option>
     </select>
 
     <button type="submit">Solicitar reserva</button>

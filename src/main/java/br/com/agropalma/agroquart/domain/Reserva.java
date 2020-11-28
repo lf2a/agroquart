@@ -70,6 +70,9 @@ public class Reserva {
     @Column(name = "criada_em")
     private LocalDateTime criadaEm;
 
+    @Column(name = "tipo")
+    private String tipo;
+
     public static class Builder {
 
         private Long id;
@@ -86,6 +89,7 @@ public class Reserva {
         private String cargo;
         private Quarto quarto;
         private LocalDateTime criadaEm;
+        private String tipo;
 
         public Builder() {
             this.id = null;
@@ -165,6 +169,11 @@ public class Reserva {
             return this;
         }
 
+        public Builder tipo(String tipo) {
+            this.tipo = tipo;
+            return this;
+        }
+
         public Reserva build() {
             return new Reserva(this);
         }
@@ -188,6 +197,7 @@ public class Reserva {
         cargo = builder.cargo;
         quarto = builder.quarto;
         criadaEm = builder.criadaEm;
+        tipo = builder.tipo;
     }
 
     public Long getId() {
@@ -303,6 +313,14 @@ public class Reserva {
         return this;
     }
 
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
     public String getDescricaoQuarto() {
         return String.format("Hospedaria: %s - Casa: N°%d - Quarto: N°%d", this.quarto.getCasa().getHospedaria().getNomeHospedaria(),
                 this.quarto.getCasa().getNumero(), this.quarto.getId());
@@ -359,6 +377,7 @@ public class Reserva {
                 ", cargo=" + cargo +
                 ", quarto=" + quarto +
                 ", criadaEm=" + criadaEm +
+                ", tipo=" + tipo +
                 '}';
     }
 }

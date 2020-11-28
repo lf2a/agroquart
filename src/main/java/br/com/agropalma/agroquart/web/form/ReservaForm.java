@@ -78,7 +78,7 @@ public class ReservaForm {
     private String motivo;
 
     @NotNull(message = "O tipo da reserva é obrigatório")
-    private Long tipoReserva;
+    private String tipoReserva;
 
     public Long getId() {
         return id;
@@ -176,11 +176,11 @@ public class ReservaForm {
         this.motivo = motivo;
     }
 
-    public Long getTipoReserva() {
+    public String getTipoReserva() {
         return tipoReserva;
     }
 
-    public void setTipoReserva(Long tipoReserva) {
+    public void setTipoReserva(String tipoReserva) {
         this.tipoReserva = tipoReserva;
     }
 

@@ -57,9 +57,9 @@
     <textarea name="motivo" id="" cols="30" rows="10" placeholder="Motivo da ida." readonly>${reserva.motivo}</textarea>
 
     <input type="number" name="tipoReserva" id="" value="1" required>
-    <select name="tipoReserva" id="">
-        <option value="0" ${""}>Hospedagem temporária</option>
-        <option value="1" ${""}>Hospedagem de tempo indeterminado</option>
+    <select name="tipoReserva" id="" disabled>
+        <option value="0" ${reserva.tipo=="hospedaria" ? "selected": ""}>Hospedagem temporária</option>
+        <option value="1" ${reserva.tipo=="alojamento" ? "selected": ""}>Hospedagem de tempo indeterminado</option>
     </select>
 
     <button type="submit">Salvar</button>
