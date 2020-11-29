@@ -35,10 +35,10 @@ public class Casa {
     private Long numero;
 
     @Column(name = "tipo")
-    private boolean tipo;
+    private String tipo;
 
     @Column(name = "sexo")
-    private boolean sexo;
+    private String sexo;
 
     @Column(name = "terceirizado")
     private boolean terceirizado;
@@ -53,7 +53,7 @@ public class Casa {
     public Casa() {
     }
 
-    public Casa(Long numero, boolean tipo, boolean sexo, boolean terceirizado, Hospedaria hospedaria) {
+    public Casa(Long numero, String tipo, String sexo, boolean terceirizado, Hospedaria hospedaria) {
         this.numero = numero;
         this.tipo = tipo;
         this.sexo = sexo;
@@ -78,19 +78,19 @@ public class Casa {
         this.numero = numero;
     }
 
-    public boolean getTipo() {
+    public String getTipo() {
         return tipo;
     }
 
-    public void setTipo(boolean tipo) {
+    public void setTipo(String tipo) {
         this.tipo = tipo;
     }
 
-    public boolean isSexo() {
+    public String getSexo() {
         return sexo;
     }
 
-    public void setSexo(boolean sexo) {
+    public void setSexo(String sexo) {
         this.sexo = sexo;
     }
 
@@ -108,10 +108,6 @@ public class Casa {
 
     public void setHospedaria(Hospedaria hospedaria) {
         this.hospedaria = hospedaria;
-    }
-
-    public boolean isTipo() {
-        return tipo;
     }
 
     public List<Quarto> getQuartos() {

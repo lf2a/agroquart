@@ -32,8 +32,8 @@
     <input type="text" name="numero" id="" placeholder="Numero da casa" required>
 
     <select name="tipo" id="">
-        <option value="0">Hospedagem temporária</option>
-        <option value="1">Hospedagem de tempo indeterminado</option>
+        <option value="hospedaria">Hospedagem temporária</option>
+        <option value="alojamento">Hospedagem de tempo indeterminado</option>
     </select>
     <select name="sexo" id="">
         <option value="0">Masculino</option>

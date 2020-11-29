@@ -53,8 +53,8 @@ public class CasaService {
         Casa casa = buscarPorId(casaForm.getId());
         casa.setId(casaForm.getId());
         casa.setNumero(casaForm.getNumero());
-        casa.setTipo(casaForm.isTipo());
-        casa.setSexo(casaForm.isSexo());
+        casa.setTipo(casaForm.getTipo());
+        casa.setSexo(casaForm.getSexo());
         casa.setTerceirizado(casaForm.isTerceirizado());
 
         Hospedaria hospedaria = hospedariaService.buscarPorId(casaForm.getHospedaria());
@@ -68,8 +68,8 @@ public class CasaService {
         Casa casa = new Casa();
         casa.setNumero(casaForm.getNumero());
         casa.setTerceirizado(casaForm.isTerceirizado());
-        casa.setTipo(casaForm.isTipo());
-        casa.setSexo(casaForm.isSexo());
+        casa.setTipo(casaForm.getTipo());
+        casa.setSexo(casaForm.getSexo());
 
         Hospedaria hospedaria = hospedariaService.buscarPorId(casaForm.getHospedaria());
         casa.setHospedaria(hospedaria);

@@ -27,13 +27,13 @@
     <input type="text" name="numero" id="" placeholder="Numero da casa" value="${empty casa.numero ? "": casa.numero}">
 
     <select name="tipo" id="">
-        <option value="0" ${casa.tipo ? "selected" : ""}>Hospedagem temporária</option>
-        <option value="1" ${casa.tipo ? "selected" : ""}>Hospedagem de tempo indeterminado</option>
+        <option value="hospedaria">Hospedagem temporária</option>
+        <option value="alojamento">Hospedagem de tempo indeterminado</option>
     </select>
 
     <select name="sexo" id="">
-        <option value="0" ${casa.sexo ? "selected" : ""}>Masculino</option>
-        <option value="1" ${casa.sexo ? "selected" : ""}>Feminino</option>
+        <option value="homem" ${casa.sexo=="homem" ? "selected": ""}>Masculino</option>
+        <option value="mulher" ${casa.sexo=="mulher" ? "selected": ""}>Feminino</option>
     </select>
     <label for="terceirizado">terceirizado</label>
     <input type="checkbox" name="terceirizado" id="terceirizado" ${casa.terceirizado ? "checked" : ""}>

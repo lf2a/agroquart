@@ -26,10 +26,10 @@ public class CasaForm {
     private Long numero;
 
     @NotNull(message = "O tipo da casa é obrigatório")
-    private boolean tipo;
+    private String tipo;
 
     @NotNull(message = "O sexo da casa é obrigatório")
-    private boolean sexo;
+    private String sexo;
 
     private boolean terceirizado;
 
@@ -56,20 +56,20 @@ public class CasaForm {
         return this;
     }
 
-    public boolean isTipo() {
+    public String getTipo() {
         return tipo;
     }
 
-    public CasaForm setTipo(boolean tipo) {
+    public CasaForm setTipo(String tipo) {
         this.tipo = tipo;
         return this;
     }
 
-    public boolean isSexo() {
+    public String getSexo() {
         return sexo;
     }
 
-    public void setSexo(boolean sexo) {
+    public void setSexo(String sexo) {
         this.sexo = sexo;
     }
 
