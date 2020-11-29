@@ -83,4 +83,15 @@ public class ReservaControllerTests {
                 .accept(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
+
+    @Test
+    @WithMockUser(roles = {"RESERVA", "EDITAR_RESERVA"})
+    public void testArquivarReserva() throws Exception {
+        this.mockMvc.perform(MockMvcRequestBuilders.post("/reserva/1/arquivar?filtro=reservas")
+                .with(SecurityMockMvcRequestPostProcessors.csrf())
+                .content("")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .accept(MediaType.APPLICATION_FORM_URLENCODED))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
 }

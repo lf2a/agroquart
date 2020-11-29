@@ -16,6 +16,14 @@
     <p>Excluido com sucesso!</p>
 </c:if>
 
+<c:if test="${param.arquivado == ''}">
+    <p>Reserva (id=${param.id}) arquivada com sucesso!</p>
+</c:if>
+
+<c:if test="${param.erro == ''}">
+    <p>A reserva não foi autorizada!</p>
+</c:if>
+
 <a href="${pageContext.request.contextPath}/admin/reservas?filtro=autorizadas">Reservas Autorizadas</a>
 <a href="${pageContext.request.contextPath}/admin/reservas?filtro=nao-autorizadas">Reservas Não Autorizadas</a>
 <a href="${pageContext.request.contextPath}/admin/reservas?filtro=arquivadas">Reservas Arquivadas</a>
@@ -79,14 +87,26 @@
                             </form>
                         </td>
                     </c:if>
-                    <c:if test="${!r.arquivada}">
-                        <td>
-                            <form action="${pageContext.request.contextPath}/reserva/${r.id}/arquivar" method="post">
-                                <sec:csrfInput/>
-                                <button type="submit">Arquivar</button>
-                            </form>
-                        </td>
-                    </c:if>
+                    <c:choose>
+                        <c:when test="${!r.arquivada}">
+                            <td>
+                                <form action="${pageContext.request.contextPath}/reserva/${r.id}/arquivar?filtro=${param.filtro}"
+                                      method="post">
+                                    <sec:csrfInput/>
+                                    <button type="submit">Arquivar</button>
+                                </form>
+                            </td>
+                        </c:when>
+                        <c:otherwise>
+                            <td>
+                                <form action="${pageContext.request.contextPath}/reserva/${r.id}/arquivar?filtro=${param.filtro}"
+                                      method="post">
+                                    <sec:csrfInput/>
+                                    <button type="submit">Desarquivar</button>
+                                </form>
+                            </td>
+                        </c:otherwise>
+                    </c:choose>
                     <sec:authorize access="hasAnyAuthority('ROLE_EDITAR_RESERVA')">
                         <td><a href="${pageContext.request.contextPath}/reserva/${r.id}/editar">editar</a></td>
                     </sec:authorize>

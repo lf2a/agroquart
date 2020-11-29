@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * <h1>ReservaService.java</h1>
@@ -82,5 +83,14 @@ public class ReservaService {
     @Transactional
     public void excluir(Long id) {
         reservaRepository.excluir(id);
+    }
+
+    @Transactional
+    public void arquivar(Long id) {
+        Reserva reserva = reservaRepository.buscarPorId(id);
+
+        reserva.setArquivar(!reserva.isArquivada());
+
+        reservaRepository.salvarOuAtualizar(reserva);
     }
 }
