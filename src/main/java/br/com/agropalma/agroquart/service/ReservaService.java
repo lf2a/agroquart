@@ -1,5 +1,6 @@
 package br.com.agropalma.agroquart.service;
 
+import br.com.agropalma.agroquart.domain.Quarto;
 import br.com.agropalma.agroquart.domain.Reserva;
 import br.com.agropalma.agroquart.domain.repository.ReservaRepository;
 import br.com.agropalma.agroquart.web.form.ReservaForm;
@@ -10,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * <h1>ReservaService.java</h1>
@@ -25,6 +25,9 @@ public class ReservaService {
 
     @Autowired
     private ReservaRepository reservaRepository;
+
+    @Autowired
+    private QuartoService quartoService;
 
     @Transactional
     public void salvarReserva(ReservaForm reservaForm) {
@@ -88,8 +91,16 @@ public class ReservaService {
     @Transactional
     public void arquivar(Long id) {
         Reserva reserva = reservaRepository.buscarPorId(id);
-
         reserva.setArquivar(!reserva.isArquivada());
+
+        Quarto quarto = quartoService.buscarPorId(reserva.getQuarto().getId());
+
+        if (reserva.isArquivada())
+            quarto.setReservado(quarto.getReservado() - 1);
+        else
+            quarto.setReservado(quarto.getReservado() + 1);
+
+        quartoService.atualizarOuSalvar(quarto);
 
         reservaRepository.salvarOuAtualizar(reserva);
     }
@@ -103,5 +114,10 @@ public class ReservaService {
         // TODO: enviar email para quem solicitou a reserva
 
         reservaRepository.salvarOuAtualizar(reserva);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Quarto> buscarQuartosDisponiveis(Long reservaId) {
+        return reservaRepository.buscarQuartosDisponiveis(reservaId);
     }
 }

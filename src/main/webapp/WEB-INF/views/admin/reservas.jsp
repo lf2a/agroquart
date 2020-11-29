@@ -65,8 +65,9 @@
                 <th>Motivo</th>
                 <th>Solicitada em</th>
                 <th>Tipo da reserva</th>
+                <th>Escolher quarto</th>
                 <sec:authorize access="hasAnyAuthority('ROLE_EDITAR_RESERVA', 'ROLE_EXCLUIR_RESERVA')">
-                    <th colspan="4">Ação</th>
+                    <th colspan="5">Ação</th>
                 </sec:authorize>
             </tr>
             <c:forEach items="${reservas}" var="r">
@@ -87,46 +88,53 @@
                     <td>${r.motivo}</td>
                     <td>${r.getCriadaEmFormatada()}</td>
                     <td>${r.tipo}</td>
-                    <c:choose>
-                        <c:when test="${!r.autorizada}">
-                            <td>
-                                <form action="${pageContext.request.contextPath}/reserva/${r.id}/autorizar?filtro=${param.filtro}"
-                                      method="post">
-                                    <sec:csrfInput/>
-                                    <button type="submit">Autorizar</button>
-                                </form>
-                            </td>
-                        </c:when>
-                        <c:otherwise>
-                            <td>
-                                <form action="${pageContext.request.contextPath}/reserva/${r.id}/autorizar?filtro=${param.filtro}"
-                                      method="post">
-                                    <sec:csrfInput/>
-                                    <button type="submit">Remover autorização</button>
-                                </form>
-                            </td>
-                        </c:otherwise>
-                    </c:choose>
-                    <c:choose>
-                        <c:when test="${!r.arquivada}">
-                            <td>
-                                <form action="${pageContext.request.contextPath}/reserva/${r.id}/arquivar?filtro=${param.filtro}"
-                                      method="post">
-                                    <sec:csrfInput/>
-                                    <button type="submit">Arquivar</button>
-                                </form>
-                            </td>
-                        </c:when>
-                        <c:otherwise>
-                            <td>
-                                <form action="${pageContext.request.contextPath}/reserva/${r.id}/arquivar?filtro=${param.filtro}"
-                                      method="post">
-                                    <sec:csrfInput/>
-                                    <button type="submit">Desarquivar</button>
-                                </form>
-                            </td>
-                        </c:otherwise>
-                    </c:choose>
+                    <sec:authorize access="hasAnyAuthority('ROLE_EDITAR_RESERVA')">
+                        <td><a href="${pageContext.request.contextPath}/reserva/${r.id}/quarto">Escolher quarto</a></td>
+                    </sec:authorize>
+                    <sec:authorize access="hasAnyAuthority('ROLE_EDITAR_RESERVA')">
+                        <c:choose>
+                            <c:when test="${!r.autorizada}">
+                                <td>
+                                    <form action="${pageContext.request.contextPath}/reserva/${r.id}/autorizar?filtro=${param.filtro}"
+                                          method="post">
+                                        <sec:csrfInput/>
+                                        <button type="submit">Autorizar</button>
+                                    </form>
+                                </td>
+                            </c:when>
+                            <c:otherwise>
+                                <td>
+                                    <form action="${pageContext.request.contextPath}/reserva/${r.id}/autorizar?filtro=${param.filtro}"
+                                          method="post">
+                                        <sec:csrfInput/>
+                                        <button type="submit">Remover autorização</button>
+                                    </form>
+                                </td>
+                            </c:otherwise>
+                        </c:choose>
+                    </sec:authorize>
+                    <sec:authorize access="hasAnyAuthority('ROLE_EDITAR_RESERVA')">
+                        <c:choose>
+                            <c:when test="${!r.arquivada}">
+                                <td>
+                                    <form action="${pageContext.request.contextPath}/reserva/${r.id}/arquivar?filtro=${param.filtro}"
+                                          method="post">
+                                        <sec:csrfInput/>
+                                        <button type="submit">Arquivar</button>
+                                    </form>
+                                </td>
+                            </c:when>
+                            <c:otherwise>
+                                <td>
+                                    <form action="${pageContext.request.contextPath}/reserva/${r.id}/arquivar?filtro=${param.filtro}"
+                                          method="post">
+                                        <sec:csrfInput/>
+                                        <button type="submit">Desarquivar</button>
+                                    </form>
+                                </td>
+                            </c:otherwise>
+                        </c:choose>
+                    </sec:authorize>
                     <sec:authorize access="hasAnyAuthority('ROLE_EDITAR_RESERVA')">
                         <td><a href="${pageContext.request.contextPath}/reserva/${r.id}/editar">editar</a></td>
                     </sec:authorize>

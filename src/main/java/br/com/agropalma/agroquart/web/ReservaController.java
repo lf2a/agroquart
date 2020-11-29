@@ -1,5 +1,6 @@
 package br.com.agropalma.agroquart.web;
 
+import br.com.agropalma.agroquart.domain.Quarto;
 import br.com.agropalma.agroquart.domain.Reserva;
 import br.com.agropalma.agroquart.service.ReservaService;
 import br.com.agropalma.agroquart.web.form.ReservaForm;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -165,10 +167,34 @@ public class ReservaController {
 
             return "redirect:/admin/reservas?filtro=" + filtro + "&erroAutorizar";
         }
-        
+
         return "error/404";
     }
 
     // TODO: get e post - escolher quartos livres
+    @GetMapping("/{reservaId}/quarto")
+    @PreAuthorize("hasRole('RESERVA') && hasRole('EDITAR_RESERVA')")
+    public String escolherQuarto(@PathVariable("reservaId") String id, Map<String, Object> model) {
+
+        Long reservaId = null;
+
+        try {
+            reservaId = Long.parseLong(id);
+        } catch (NumberFormatException e) {
+            return "error/400";
+        }
+
+        Optional<Reserva> reservaOptional = Optional.ofNullable(reservaService.buscarPorId(reservaId));
+
+        if (reservaOptional.isPresent()) {
+            List<Quarto> quartoList = reservaService.buscarQuartosDisponiveis(reservaId);
+            model.put("quartos", quartoList);
+
+            return "reserva/quartos";
+        }
+
+        return "error/404";
+    }
+
     // TODO: get - gerar relatorio completo com base em trimestres (irá ser criada um controler para relatorios)
 }

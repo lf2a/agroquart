@@ -1,5 +1,6 @@
 package br.com.agropalma.agroquart.domain.repository;
 
+import br.com.agropalma.agroquart.domain.Quarto;
 import br.com.agropalma.agroquart.domain.Reserva;
 
 import org.hibernate.Session;
@@ -90,5 +91,16 @@ public class ReservaRepository implements ICrudRepository<Reserva, Long> {
 
         // executando o sql (excluindo a reserva)
         return query.executeUpdate();
+    }
+
+    public List<Quarto> buscarQuartosDisponiveis(Long reservaId) {
+        Session session = entityManager.unwrap(Session.class);
+
+        Reserva temp = buscarPorId(reservaId);
+
+        Query<Quarto> query = session.createQuery("select q from Quarto q where q.reservado < q.capacidade and q.casa.sexo=:reservaSexo", Quarto.class);
+        query.setParameter("reservaSexo", temp.getSexo());
+
+        return query.getResultList();
     }
 }
