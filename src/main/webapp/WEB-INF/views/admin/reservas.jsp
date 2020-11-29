@@ -17,11 +17,19 @@
 </c:if>
 
 <c:if test="${param.arquivado == ''}">
-    <p>Reserva (id=${param.id}) arquivada com sucesso!</p>
+    <p>Operação realizada com sucesso!</p>
 </c:if>
 
-<c:if test="${param.erro == ''}">
-    <p>A reserva não foi autorizada!</p>
+<c:if test="${param.autorizado == ''}">
+    <p>Operação realizada com sucesso!</p>
+</c:if>
+
+<c:if test="${param.erroArquivar == ''}">
+    <p>Autorize a reserva para que ela possa ser arquivada!</p>
+</c:if>
+
+<c:if test="${param.erroAutorizar == ''}">
+    <p>Não foi possivel autorizar, escolha um quarto para a reserva!</p>
 </c:if>
 
 <a href="${pageContext.request.contextPath}/admin/reservas?filtro=autorizadas">Reservas Autorizadas</a>
@@ -79,14 +87,26 @@
                     <td>${r.motivo}</td>
                     <td>${r.getCriadaEmFormatada()}</td>
                     <td>${r.tipo}</td>
-                    <c:if test="${!r.autorizada}">
-                        <td>
-                            <form action="${pageContext.request.contextPath}/reserva/${r.id}/autorizar" method="post">
-                                <sec:csrfInput/>
-                                <button type="submit">Autorizar</button>
-                            </form>
-                        </td>
-                    </c:if>
+                    <c:choose>
+                        <c:when test="${!r.autorizada}">
+                            <td>
+                                <form action="${pageContext.request.contextPath}/reserva/${r.id}/autorizar?filtro=${param.filtro}"
+                                      method="post">
+                                    <sec:csrfInput/>
+                                    <button type="submit">Autorizar</button>
+                                </form>
+                            </td>
+                        </c:when>
+                        <c:otherwise>
+                            <td>
+                                <form action="${pageContext.request.contextPath}/reserva/${r.id}/autorizar?filtro=${param.filtro}"
+                                      method="post">
+                                    <sec:csrfInput/>
+                                    <button type="submit">Remover autorização</button>
+                                </form>
+                            </td>
+                        </c:otherwise>
+                    </c:choose>
                     <c:choose>
                         <c:when test="${!r.arquivada}">
                             <td>

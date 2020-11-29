@@ -93,4 +93,15 @@ public class ReservaService {
 
         reservaRepository.salvarOuAtualizar(reserva);
     }
+
+    @Transactional
+    public void autorizar(Long id) {
+        Reserva reserva = reservaRepository.buscarPorId(id);
+
+        reserva.setAutorizada(!reserva.isAutorizada());
+
+        // TODO: enviar email para quem solicitou a reserva
+
+        reservaRepository.salvarOuAtualizar(reserva);
+    }
 }

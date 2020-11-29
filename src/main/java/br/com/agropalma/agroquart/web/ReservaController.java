@@ -127,7 +127,6 @@ public class ReservaController {
 
         if (reservaOptional.isPresent()) {
             Reserva temp = reservaOptional.get();
-            System.out.println(temp);
 
             if (temp.isAutorizada()) {
                 reservaService.arquivar(temp.getId());
@@ -135,13 +134,41 @@ public class ReservaController {
                 return "redirect:/admin/reservas?filtro=arquivadas&arquivado&id=" + id;
             }
 
-            return "redirect:/admin/reservas?filtro=" + filtro + "&erro";
+            return "redirect:/admin/reservas?filtro=" + filtro + "&erroArquivar";
         }
 
         return "error/404";
     }
 
-    // TODO: post - autorizar reserva (enviar email quando a reserva for autorizada, so vai ser autorizada se o admin já estiver escolhido o quarto)
+    @PostMapping("/{reservaId}/autorizar")
+    @PreAuthorize("hasRole('RESERVA') && hasRole('EDITAR_RESERVA')")
+    public String autorizar(@PathVariable("reservaId") String id, @RequestParam("filtro") String filtro) {
+
+        Long reservaId = null;
+
+        try {
+            reservaId = Long.parseLong(id);
+        } catch (NumberFormatException e) {
+            return "error/400";
+        }
+
+        Optional<Reserva> reservaOptional = Optional.ofNullable(reservaService.buscarPorId(reservaId));
+
+        if (reservaOptional.isPresent()) {
+            Reserva temp = reservaOptional.get();
+
+            if (Optional.ofNullable(temp.getQuarto()).isPresent()) { // verificando se já foi escolhido um quarto para a reserva
+                reservaService.autorizar(temp.getId());
+
+                return "redirect:/admin/reservas?filtro=autorizadas&autorizado&id=" + id;
+            }
+
+            return "redirect:/admin/reservas?filtro=" + filtro + "&erroAutorizar";
+        }
+        
+        return "error/404";
+    }
+
     // TODO: get e post - escolher quartos livres
     // TODO: get - gerar relatorio completo com base em trimestres (irá ser criada um controler para relatorios)
 }
