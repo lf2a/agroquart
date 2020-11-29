@@ -63,6 +63,11 @@ public class QuartoService {
     }
 
     @Transactional
+    public void atualizarOuSalvar(Quarto quarto) {
+        quartoRepository.salvarOuAtualizar(quarto);
+    }
+
+    @Transactional
     public int excluir(Long id) {
         return quartoRepository.excluir(id);
     }

@@ -38,16 +38,20 @@ public class Quarto {
     @JoinColumn(name = "casa_id")
     private Casa casa;
 
+    @Column(name = "reservado")
+    private Long reservado;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "quarto", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private List<Reserva> reservas;
 
     public Quarto() {
     }
 
-    public Quarto(long id, Long capacidade, Casa casa, List<Reserva> reservas) {
+    public Quarto(Long id, Long capacidade, Casa casa, Long reservado, List<Reserva> reservas) {
         this.id = id;
         this.capacidade = capacidade;
         this.casa = casa;
+        this.reservado = reservado;
         this.reservas = reservas;
     }
 
@@ -75,6 +79,14 @@ public class Quarto {
         this.casa = casa;
     }
 
+    public Long getReservado() {
+        return reservado;
+    }
+
+    public void setReservado(Long reservado) {
+        this.reservado = reservado;
+    }
+
     public List<Reserva> getReservas() {
         return reservas;
     }
@@ -89,6 +101,7 @@ public class Quarto {
                 "id=" + id +
                 ", capacidade=" + capacidade +
                 ", casa=" + casa +
+                ", reservado=" + reservado +
                 '}';
     }
 }
