@@ -2,6 +2,7 @@ package br.com.agropalma.agroquart.web;
 
 import br.com.agropalma.agroquart.domain.Quarto;
 import br.com.agropalma.agroquart.domain.Reserva;
+import br.com.agropalma.agroquart.service.QuartoService;
 import br.com.agropalma.agroquart.service.ReservaService;
 import br.com.agropalma.agroquart.web.form.ReservaForm;
 import br.com.agropalma.agroquart.web.validation.ValidacaoForm;
@@ -36,6 +37,9 @@ public class ReservaController {
 
     @Autowired
     private ReservaService reservaService;
+
+    @Autowired
+    private QuartoService quartoService;
 
     @PostMapping("")
     public String criarReserva(@Valid @ModelAttribute("reservaForm") ReservaForm reservaForm, BindingResult bindingResult) {
@@ -171,7 +175,6 @@ public class ReservaController {
         return "error/404";
     }
 
-    // TODO: get e post - escolher quartos livres
     @GetMapping("/{reservaId}/quarto")
     @PreAuthorize("hasRole('RESERVA') && hasRole('EDITAR_RESERVA')")
     public String escolherQuarto(@PathVariable("reservaId") String id, Map<String, Object> model) {
@@ -191,6 +194,32 @@ public class ReservaController {
             model.put("quartos", quartoList);
 
             return "reserva/quartos";
+        }
+
+        return "error/404";
+    }
+
+    @PostMapping("/{reservaId}/quarto/{quartoId}")
+    @PreAuthorize("hasRole('RESERVA') && hasRole('EDITAR_RESERVA')")
+    public String escolherQuarto(@PathVariable("reservaId") String reserva, @PathVariable("quartoId") String quarto) {
+
+        Long reservaId;
+        Long quartoId;
+
+        try {
+            reservaId = Long.parseLong(reserva);
+            quartoId = Long.parseLong(quarto);
+        } catch (NumberFormatException e) {
+            return "error/400";
+        }
+
+        Optional<Reserva> reservaOptional = Optional.ofNullable(reservaService.buscarPorId(reservaId));
+        Optional<Quarto> quartoOptional = Optional.ofNullable(quartoService.buscarPorId(quartoId));
+
+        if (reservaOptional.isPresent() && quartoOptional.isPresent()) {
+            reservaService.escolherQuarto(reservaId, quartoId);
+
+            return "redirect:/reserva/" + reserva + "/quarto?sucesso";
         }
 
         return "error/404";

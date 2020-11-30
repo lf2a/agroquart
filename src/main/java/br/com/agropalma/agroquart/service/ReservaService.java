@@ -120,4 +120,14 @@ public class ReservaService {
     public List<Quarto> buscarQuartosDisponiveis(Long reservaId) {
         return reservaRepository.buscarQuartosDisponiveis(reservaId);
     }
+
+    @Transactional
+    public void escolherQuarto(Long reservaId, Long quartoId) {
+        Reserva reserva = buscarPorId(reservaId);
+
+        Quarto quarto = quartoService.buscarPorId(quartoId);
+        reserva.setQuarto(quarto);
+
+        reservaRepository.salvarOuAtualizar(reserva);
+    }
 }

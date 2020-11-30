@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!doctype html>
 <html lang="pt-br">
@@ -10,6 +11,10 @@
     <title>Quartos disponiveis</title>
 </head>
 <body>
+
+<c:if test="${param.sucesso == ''}">
+    <p>O quarto foi escolhido com sucesso</p>
+</c:if>
 
 <table>
     <tr>
@@ -29,7 +34,12 @@
             <td>${q.casa.sexo}</td>
             <td>${q.casa.numero}</td>
             <td>${q.casa.hospedaria.nomeHospedaria}</td>
-            <td><a href="${pageContext.request.contextPath}">escolher quarto</a></td>
+            <td>
+                <form action="${pageContext.request.contextPath}/reserva/${reservaId}/quarto/${q.id}" method="post">
+                    <sec:csrfInput/>
+                    <button type="submit">Escolher</button>
+                </form>
+            </td>
         </tr>
     </c:forEach>
 </table>

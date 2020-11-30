@@ -2,6 +2,7 @@ package br.com.agropalma.agroquart.web;
 
 import br.com.agropalma.agroquart.config.AuthenticationSuccessHandlerCustomizado;
 import br.com.agropalma.agroquart.config.ProdDbConfig;
+import br.com.agropalma.agroquart.service.QuartoService;
 import br.com.agropalma.agroquart.service.ReservaService;
 import br.com.agropalma.agroquart.service.UsuarioService;
 
@@ -44,6 +45,9 @@ public class ReservaControllerTests {
 
     @MockBean
     private ReservaService reservaService;
+
+    @MockBean
+    private QuartoService quartoService;
 
     @Test
     public void testAdicionarReserva() throws Exception {
@@ -99,6 +103,24 @@ public class ReservaControllerTests {
     @WithMockUser(roles = {"RESERVA", "EDITAR_RESERVA"})
     public void testAutorizarReserva() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders.post("/reserva/1/autorizar?filtro=reservas")
+                .with(SecurityMockMvcRequestPostProcessors.csrf())
+                .content("")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .accept(MediaType.APPLICATION_FORM_URLENCODED))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    @WithMockUser(roles = {"RESERVA", "EDITAR_RESERVA"})
+    public void testAcessoEscolherQuartoDaReserva() throws Exception {
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/reserva/1/quarto"))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    @WithMockUser(roles = {"RESERVA", "EDITAR_RESERVA"})
+    public void testEscolherQuartoDaReserva() throws Exception {
+        this.mockMvc.perform(MockMvcRequestBuilders.post("/reserva/1/quarto/1")
                 .with(SecurityMockMvcRequestPostProcessors.csrf())
                 .content("")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
