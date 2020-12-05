@@ -63,23 +63,37 @@ public class UsuarioRepository implements ICrudRepository<Usuario, Long> {
         return usuario;
     }
 
-    public Usuario verificarEmailUsername(String usuario, String email) {
+    public boolean verificarEmail(String email) {
         // estabelecendo a sessão
         Session session = entityManager.unwrap(Session.class);
 
-        // criando a query para buscar o usuário
-        Query<Usuario> query = session.createQuery("from Usuario where usuario=:usuario or email=:email", Usuario.class);
-        query.setParameter("usuario", usuario);
-        query.setParameter("email", email);
+        boolean exists = (Long) session.createQuery("select count(*) from Usuario where email=:email")
+                .setParameter("email", email)
+                .uniqueResult() > 0;
 
-        Usuario usuarioObj;
-        try {
-            usuarioObj = query.getSingleResult();
-        } catch (Exception e) {
-            return null;
-        }
+        return exists;
+    }
 
-        return usuarioObj;
+    public boolean verificarUsuario(String usuario) {
+
+        Session session = entityManager.unwrap(Session.class);
+
+        boolean exists = (Long) session.createQuery("select count(*) from Usuario where usuario=:usuario")
+                .setParameter("usuario", usuario)
+                .uniqueResult() > 0;
+
+        return exists;
+    }
+
+    public boolean verificarMatricula(Long matricula) {
+
+        Session session = entityManager.unwrap(Session.class);
+
+        boolean exists = (Long) session.createQuery("select count(*) from Usuario where matricula=:matricula")
+                .setParameter("matricula", matricula)
+                .uniqueResult() > 0;
+
+        return exists;
     }
 
     @Override

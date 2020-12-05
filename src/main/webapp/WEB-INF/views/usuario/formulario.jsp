@@ -25,13 +25,13 @@
 <form action="${pageContext.request.contextPath}/usuario/${usuario.matricula}/editar" method="post">
     <sec:csrfInput/>
     <input class="input" type="text" name="usuario" placeholder="Nome de usuário"
-           value="${empty usuario.usuario ? "": usuario.usuario}" required>
+           value="${empty usuario.usuario ? "": usuario.usuario}" readonly>
     <input class="input" type="email" name="email" placeholder="Email do colaborador"
-           value="${empty usuario.email ? "": usuario.email}">
+           value="${empty usuario.email ? "": usuario.email}" readonly>
     <input class="input" type="text" name="" placeholder="Matrícula do colaborador"
            value="${empty usuario.matricula ? "": usuario.matricula}" readonly>
     <input class="input" type="text" name="nomeCompleto" placeholder="Nome completo do colaborador"
-           value="${empty usuario.nomeCompleto ? "": usuario.nomeCompleto}">
+           value="${empty usuario.nomeCompleto ? "": usuario.nomeCompleto}" readonly>
     <input class="input" type="text" name="empresa" placeholder="Empresa em que o colaborador atua"
            value="${empty usuario.empresa ? "": usuario.empresa}">
     <label for="ativo">Ativo</label>

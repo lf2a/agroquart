@@ -148,4 +148,19 @@ public class UsuarioService implements UserDetailsService {
     public int excluir(Long id) {
         return usuarioRepository.excluir(id);
     }
+
+    @Transactional(readOnly = true)
+    public boolean verificarEmail(String email) {
+        return usuarioRepository.verificarEmail(email);
+    }
+
+    @Transactional(readOnly = true)
+    public boolean verificarUsuario(String usuario) {
+        return usuarioRepository.verificarUsuario(usuario);
+    }
+
+    @Transactional(readOnly = true)
+    public boolean verificarMatricula(Long matricula) {
+        return usuarioRepository.verificarMatricula(matricula);
+    }
 }
