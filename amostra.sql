@@ -94,11 +94,11 @@ INSERT INTO `quarto` (`id`, `capacidade`, `casa_id`) VALUES ('15', '2', '8');
 INSERT INTO `quarto` (`id`, `capacidade`, `casa_id`) VALUES ('16', '2', '8');
 
 -- tabela reserva
-INSERT INTO `reserva` (`id`, `quarto_id`, `gerente_responsavel`, `nome_completo`, `matricula`, `email`, `empresa`, `data_inicio`, `data_termino`, `motivo`, `autorizada`, `arquivar`, `cargo`)
+INSERT INTO `reserva` (`id`, `quarto_id`, `gerente_responsavel`, `nome_completo`, `matricula`, `email`, `empresa`, `data_inicio`, `data_termino`, `motivo`, `autorizada`, `arquivada`, `cargo`)
 VALUES ('1', '1', 'Jose Silva', 'Ana Paula', '67890', 'ana@email.com', 'INSS', '2020-01-01 10:00:00', '2020-01-10 10:00:00', 'Fazer vistoria nos maquinários', '0', '0', 'Analista de sistemas');
 
-INSERT INTO `reserva` (`id`, `quarto_id`, `gerente_responsavel`, `nome_completo`, `matricula`, `email`, `empresa`, `data_inicio`, `data_termino`, `motivo`, `autorizada`, `arquivar`, `cargo`)
+INSERT INTO `reserva` (`id`, `quarto_id`, `gerente_responsavel`, `nome_completo`, `matricula`, `email`, `empresa`, `data_inicio`, `data_termino`, `motivo`, `autorizada`, `arquivada`, `cargo`)
 VALUES ('2', '5', 'Jose Silva', 'Ana Paula', '67890', 'ana@email.com', 'INSS', '2020-01-15 10:00:00', '2020-01-25 10:00:00', 'Fazer manutenção nos maquinarios', '0', '0', 'Tecnica de informática');
 
-INSERT INTO `reserva` (`id`, `quarto_id`, `gerente_responsavel`, `nome_completo`, `matricula`, `email`, `empresa`, `data_inicio`, `data_termino`, `motivo`, `autorizada`, `arquivar`, `cargo`)
+INSERT INTO `reserva` (`id`, `quarto_id`, `gerente_responsavel`, `nome_completo`, `matricula`, `email`, `empresa`, `data_inicio`, `data_termino`, `motivo`, `autorizada`, `arquivada`, `cargo`)
 VALUES ('3', '3', 'Leticia Santos', 'Carlos Costa', '65643', 'carlos@email.com', 'Google', '2020-04-01 10:00:00', '2020-04-05 10:00:00', 'Fazer vistoria nos computadores', '0', '0', 'Engenheiro civil');
