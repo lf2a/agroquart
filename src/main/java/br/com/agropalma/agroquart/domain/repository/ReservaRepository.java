@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -43,30 +42,11 @@ public class ReservaRepository implements ICrudRepository<Reserva, Long> {
         return null;
     }
 
-    public List<Reserva> buscarReservasAutorizadas(boolean autorizada) {
-        // estabelecendo uma sessão
+    public List<Reserva> buscarReservas(String filtro) {
+        // TODO: fazer paginação
         Session session = entityManager.unwrap(Session.class);
 
-        Query<Reserva> query = session.createQuery("select r from Reserva r where r.autorizada=:autorizada order by r.criadaEm asc", Reserva.class);
-        query.setParameter("autorizada", autorizada);
-
-        return query.getResultList();
-    }
-
-    public List<Reserva> buscarReservasArquivadas(boolean arquivada) {
-        Session session = entityManager.unwrap(Session.class);
-
-        Query<Reserva> query = session.createQuery("select r from Reserva r where r.arquivada=:arquivada order by r.criadaEm desc", Reserva.class);
-        query.setParameter("arquivada", arquivada);
-
-        return query.getResultList();
-    }
-
-    public List<Reserva> buscarReservasEmAndamento() {
-        Session session = entityManager.unwrap(Session.class);
-
-        Query<Reserva> query = session.createQuery("select r from Reserva r where r.arquivada=false and r.autorizada=true and r.dataInicio <= :hoje and r.dataTermino > :hoje order by r.criadaEm desc", Reserva.class);
-        query.setParameter("hoje", LocalDateTime.now());
+        Query<Reserva> query = session.createQuery("select r from Reserva r " + filtro + " order by r.criadaEm desc", Reserva.class);
 
         return query.getResultList();
     }
@@ -94,6 +74,7 @@ public class ReservaRepository implements ICrudRepository<Reserva, Long> {
     }
 
     public List<Quarto> buscarQuartosDisponiveis(Long reservaId) {
+        // TODO: mover para o repositorio de quarto
         Session session = entityManager.unwrap(Session.class);
 
         Reserva temp = buscarPorId(reservaId);

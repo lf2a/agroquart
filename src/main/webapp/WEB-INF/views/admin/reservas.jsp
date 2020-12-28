@@ -32,11 +32,11 @@
     <p>Não foi possivel autorizar, escolha um quarto para a reserva!</p>
 </c:if>
 
-<a href="${pageContext.request.contextPath}/admin/reservas?filtro=autorizadas">Reservas Autorizadas</a>
-<a href="${pageContext.request.contextPath}/admin/reservas?filtro=nao-autorizadas">Reservas Não Autorizadas</a>
-<a href="${pageContext.request.contextPath}/admin/reservas?filtro=arquivadas">Reservas Arquivadas</a>
-<%--<a href="${pageContext.request.contextPath}/admin/reservas?filtro=nao-arquivadas">Reservas Não Arquivadas</a>--%>
-<a href="${pageContext.request.contextPath}/admin/reservas?filtro=reservas-em-andamento">Reservas Em andamento</a>
+<form action="${pageContext.request.contextPath}/admin/reservas" method="get">
+    Autorizadas<input type="checkbox" name="filtro" value="autorizadas"><br>
+    Arquivadas<input type="checkbox" name="filtro" value="arquivadas"><br>
+    <button type="submit">Buscar</button>
+</form>
 
 <c:choose>
     <c:when test="${reservas == null}">

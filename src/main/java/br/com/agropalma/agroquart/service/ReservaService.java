@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 /**
  * <h1>ReservaService.java</h1>
@@ -64,18 +65,32 @@ public class ReservaService {
     }
 
     @Transactional(readOnly = true)
-    public List<Reserva> buscarReservasAutorizadas(boolean autorizada) {
-        return reservaRepository.buscarReservasAutorizadas(autorizada);
-    }
+    public List<Reserva> buscarReservas(Set<String> filtros) {
+        StringBuilder filtro = new StringBuilder("");
 
-    @Transactional(readOnly = true)
-    public List<Reserva> buscarReservasArquivadas(boolean arquivada) {
-        return reservaRepository.buscarReservasArquivadas(arquivada);
-    }
+        // montando os filtros em sql
+        // TODO: verificar se existe alguma outra forma de se fazer.
+        if (!filtros.isEmpty()) {
+            filtro.append("where ");
 
-    @Transactional(readOnly = true)
-    public List<Reserva> buscarReservasEmAndamento() {
-        return reservaRepository.buscarReservasEmAndamento();
+            if (filtros.contains("autorizadas")) {
+                filtro.append("r.autorizada=true");
+            } else {
+                filtro.append("r.autorizada=false");
+            }
+
+            filtro.append(" and ");
+
+            if (filtros.contains("arquivadas")) {
+                filtro.append("r.arquivada=true");
+            } else {
+                filtro.append("r.arquivada=false");
+            }
+        } else {
+            filtro.append("r.autorizada=false and r.arquivada=false");
+        }
+
+        return reservaRepository.buscarReservas(filtro.toString());
     }
 
     @Transactional(readOnly = true)

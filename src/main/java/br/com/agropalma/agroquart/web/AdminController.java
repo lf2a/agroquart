@@ -16,9 +16,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * <h1>AdminController.java</h1>
@@ -109,59 +112,15 @@ public class AdminController {
 
     @GetMapping("/reservas")
     @PreAuthorize("hasRole('ADMIN') && hasRole('ROLE_RESERVA')")
-    public String reservas(@RequestParam(required = false) String filtro, Map<String, Object> model) {
+    public String reservas(@RequestParam(required = false) String[] filtro, Map<String, Object> model) {
 
-        Optional<String> filtroOptional = Optional.ofNullable(filtro);
+        Optional<String[]> filtroOptional = Optional.ofNullable(filtro);
 
         List<Reserva> reservasList;
 
-        if (filtroOptional.isPresent()) {
-            switch (filtro) {
-                case "autorizadas":
-                    model.put("tipo", "Reservas autorizadas");
-                    reservasList = reservaService.buscarReservasAutorizadas(true);
-
-                    model.put("reservas", reservasList);
-                    break;
-
-                case "nao-autorizadas":
-                    model.put("tipo", "Reservas não autorizadas");
-                    reservasList = reservaService.buscarReservasAutorizadas(false);
-
-                    model.put("reservas", reservasList);
-                    break;
-
-                case "arquivadas":
-                    model.put("tipo", "Reservas arquivadas");
-                    reservasList = reservaService.buscarReservasArquivadas(true);
-
-                    model.put("reservas", reservasList);
-                    break;
-
-                case "nao-arquivadas": // TODO: por enquanto não irá ser usada, decidir um futuro para isso. :)
-                    model.put("tipo", "Reservas não arquivadas");
-                    reservasList = reservaService.buscarReservasArquivadas(false);
-
-                    model.put("reservas", reservasList);
-                    break;
-
-                case "reservas-em-andamento":
-                    model.put("tipo", "Reservas em andamento");
-
-                    reservasList = reservaService.buscarReservasEmAndamento();
-
-                    model.put("reservas", reservasList);
-                    break;
-
-                default:
-                    return "error/400"; // valor da query string "filtro" errado, irá lançar um erro de "bad request" 400.
-            }
-
-            return "admin/reservas";
-        }
-
-        model.put("tipo", "Selecione um filtro");
-        model.put("reservas", null);
+        Set<String> filtroSet = new HashSet<>(Arrays.asList(filtroOptional.orElse(new String[]{""})));
+        reservasList = reservaService.buscarReservas(filtroSet);
+        model.put("reservas", reservasList);
 
         return "admin/reservas";
     }
