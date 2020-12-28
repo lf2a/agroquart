@@ -36,8 +36,8 @@
         <option value="alojamento">Hospedagem de tempo indeterminado</option>
     </select>
     <select name="sexo" id="">
-        <option value="0">Masculino</option>
-        <option value="1">Feminino</option>
+        <option value="homem">Masculino</option>
+        <option value="mulher">Feminino</option>
     </select>
     <label for="terceirizado">terceirizado</label>
     <input type="checkbox" name="terceirizado" id="terceirizado">
