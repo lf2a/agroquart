@@ -101,7 +101,6 @@ public class UsuarioRepository implements ICrudRepository<Usuario, Long> {
         // estabelecendo a sessão
         Session session = entityManager.unwrap(Session.class);
 
-        // TODO: por ordenação com base no que o suario quer
         // criando a query para buscar os usuários
         Query<Usuario> query = session.createQuery("from Usuario", Usuario.class);
 

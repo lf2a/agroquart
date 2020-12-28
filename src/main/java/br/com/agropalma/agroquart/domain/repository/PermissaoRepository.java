@@ -55,7 +55,6 @@ public class PermissaoRepository implements ICrudRepository<Permissao, Long> {
         // estabelecendo a sessão
         Session session = entityManager.unwrap(Session.class);
 
-        // TODO: por ordenação com base no que o suario quer
         // criando a query para buscar as permissoes
         Query<Permissao> query = session.createQuery("from Permissao", Permissao.class);
 
