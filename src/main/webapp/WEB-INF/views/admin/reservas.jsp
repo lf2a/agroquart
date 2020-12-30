@@ -140,7 +140,7 @@
                     </sec:authorize>
                     <sec:authorize access="hasAnyAuthority('ROLE_EXCLUIR_RESERVA')">
                         <td>
-                            <form action="${pageContext.request.contextPath}/reserva/${r.id}/excluir?filtro=${param.filtro}"
+                            <form action="${pageContext.request.contextPath}/reserva/${r.id}/excluir"
                                   method="post">
                                 <sec:csrfInput/>
                                 <button type="submit">Excluir</button>

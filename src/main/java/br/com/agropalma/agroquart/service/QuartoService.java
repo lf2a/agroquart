@@ -47,6 +47,7 @@ public class QuartoService {
     public void novoQuarto(QuartoForm obj) {
         Quarto quarto = new Quarto();
         quarto.setCapacidade(obj.getCapacidade());
+        quarto.setReservado(0L);
 
         Casa casa = casaService.buscarPorId(obj.getCasa());
         quarto.setCasa(casa);

@@ -95,7 +95,7 @@ public class ReservaController {
 
     @PostMapping("/{reservaId}/excluir")
     @PreAuthorize("hasRole('RESERVA') && hasRole('EXCLUIR_RESERVA')")
-    public String excluirReserva(@PathVariable("reservaId") String id, @RequestParam("filtro") String filtro) {
+    public String excluirReserva(@PathVariable("reservaId") String id) {
 
         Long reservaId = null;
 
@@ -111,7 +111,7 @@ public class ReservaController {
             Reserva temp = reservaOptional.get();
             reservaService.excluir(temp.getId());
 
-            return "redirect:/admin/reservas?filtro=" + filtro + "&excluido";
+            return "redirect:/admin/reservas?excluido";
         }
 
         return "error/404";
@@ -119,7 +119,7 @@ public class ReservaController {
 
     @PostMapping("/{reservaId}/arquivar")
     @PreAuthorize("hasRole('RESERVA') && hasRole('EDITAR_RESERVA')")
-    public String arquivar(@PathVariable("reservaId") String id, @RequestParam("filtro") String filtro) {
+    public String arquivar(@PathVariable("reservaId") String id) {
 
         Long reservaId = null;
 
@@ -137,10 +137,10 @@ public class ReservaController {
             if (temp.isAutorizada()) {
                 reservaService.arquivar(temp.getId());
 
-                return "redirect:/admin/reservas?filtro=arquivadas&arquivado&id=" + id;
+                return "redirect:/admin/reservas?filtro=arquivadas";
             }
 
-            return "redirect:/admin/reservas?filtro=" + filtro + "&erroArquivar";
+            return "redirect:/admin/reservas?erroArquivar";
         }
 
         return "error/404";
@@ -166,10 +166,10 @@ public class ReservaController {
             if (Optional.ofNullable(temp.getQuarto()).isPresent()) { // verificando se já foi escolhido um quarto para a reserva
                 reservaService.autorizar(temp.getId());
 
-                return "redirect:/admin/reservas?filtro=autorizadas&autorizado&id=" + id;
+                return "redirect:/admin/reservas?filtro=autorizadas";
             }
 
-            return "redirect:/admin/reservas?filtro=" + filtro + "&erroAutorizar";
+            return "redirect:/admin/reservas?&erroAutorizar";
         }
 
         return "error/404";

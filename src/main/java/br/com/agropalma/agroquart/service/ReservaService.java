@@ -139,6 +139,9 @@ public class ReservaService {
         Reserva reserva = buscarPorId(reservaId);
 
         Quarto quarto = quartoService.buscarPorId(quartoId);
+        quarto.setReservado(quarto.getReservado() + 1);
+        quartoService.atualizarOuSalvar(quarto);
+
         reserva.setQuarto(quarto);
 
         reservaRepository.salvarOuAtualizar(reserva);
