@@ -62,18 +62,6 @@
                         <sec:csrfInput/>
                         <button type="submit">excluir</button>
                     </form>
-<%--                    <ul> &lt;%&ndash; TODO: decidir se esta sublista vai ser renderizada &ndash;%&gt;--%>
-<%--                        <c:forEach items="${casa.quartos}" var="quarto">--%>
-<%--                            <li>Número do quarto: ${casa.numero}--%>
-<%--                                <a href="${pageContext.request.contextPath}/quarto/${quarto.id}/editar">editar</a>--%>
-<%--                                <form action="${pageContext.request.contextPath}/quarto/${quarto.id}/excluir"--%>
-<%--                                      method="post">--%>
-<%--                                    <sec:csrfInput/>--%>
-<%--                                    <button type="submit">excluir</button>--%>
-<%--                                </form>--%>
-<%--                            </li>--%>
-<%--                        </c:forEach>--%>
-<%--                    </ul>--%>
                 </li>
             </c:forEach>
         </ul>
