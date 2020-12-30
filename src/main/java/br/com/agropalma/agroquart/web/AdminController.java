@@ -112,14 +112,12 @@ public class AdminController {
 
     @GetMapping("/reservas")
     @PreAuthorize("hasRole('ADMIN') && hasRole('ROLE_RESERVA')")
-    public String reservas(@RequestParam(required = false) String[] filtro, Map<String, Object> model) {
+    public String reservas(@RequestParam(required = false) Set<String> filtro, Map<String, Object> model) {
 
-        Optional<String[]> filtroOptional = Optional.ofNullable(filtro);
+        Optional<Set<String>> filtroOptional = Optional.ofNullable(filtro);
 
         List<Reserva> reservasList;
-
-        Set<String> filtroSet = new HashSet<>(Arrays.asList(filtroOptional.orElse(new String[]{""})));
-        reservasList = reservaService.buscarReservas(filtroSet);
+        reservasList = reservaService.buscarReservas(filtroOptional.orElse(new HashSet<>()));
         model.put("reservas", reservasList);
 
         return "admin/reservas";

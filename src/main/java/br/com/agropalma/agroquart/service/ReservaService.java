@@ -86,8 +86,6 @@ public class ReservaService {
             } else {
                 filtro.append("r.arquivada=false");
             }
-        } else {
-            filtro.append("r.autorizada=false and r.arquivada=false");
         }
 
         return reservaRepository.buscarReservas(filtro.toString());
