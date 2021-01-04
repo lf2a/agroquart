@@ -5,7 +5,9 @@ import br.com.agropalma.agroquart.domain.Reserva;
 
 import org.hibernate.Session;
 import org.hibernate.query.Query;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -26,6 +28,9 @@ public class ReservaRepository implements ICrudRepository<Reserva, Long> {
     @Autowired
     private EntityManager entityManager;
 
+    @Value("${paginacaoQtd}")
+    private int qtdItensPorPagina;
+
     @Override
     public Reserva buscarPorId(Long id) {
         // estabelecendo uma sessão
@@ -42,11 +47,12 @@ public class ReservaRepository implements ICrudRepository<Reserva, Long> {
         return null;
     }
 
-    public List<Reserva> buscarReservas(String filtro) {
-        // TODO: fazer paginação
+    public List<Reserva> buscarReservas(String filtro, int numeroDePartida) {
         Session session = entityManager.unwrap(Session.class);
 
         Query<Reserva> query = session.createQuery("select r from Reserva r " + filtro + " order by r.criadaEm desc", Reserva.class);
+        query.setFirstResult(numeroDePartida);
+        query.setMaxResults(qtdItensPorPagina);
 
         return query.getResultList();
     }
@@ -83,5 +89,13 @@ public class ReservaRepository implements ICrudRepository<Reserva, Long> {
         query.setParameter("reservaSexo", temp.getSexo());
 
         return query.getResultList();
+    }
+
+    public Long quantidadeDeReservas() {
+        Session session = entityManager.unwrap(Session.class);
+
+        Query<Long> query = session.createQuery("select count(r) from Reserva r", Long.class);
+
+        return query.getSingleResult();
     }
 }

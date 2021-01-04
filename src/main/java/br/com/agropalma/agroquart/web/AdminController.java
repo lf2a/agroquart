@@ -9,6 +9,7 @@ import br.com.agropalma.agroquart.service.ReservaService;
 import br.com.agropalma.agroquart.service.UsuarioService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -52,6 +52,9 @@ public class AdminController {
 
     @Autowired
     private ReservaService reservaService;
+
+    @Value("${paginacaoQtd}")
+    private Long qtdItensPorPagina;
 
     @GetMapping("")
     @PreAuthorize("hasRole('ADMIN')")
@@ -112,13 +115,37 @@ public class AdminController {
 
     @GetMapping("/reservas")
     @PreAuthorize("hasRole('ADMIN') && hasRole('ROLE_RESERVA')")
-    public String reservas(@RequestParam(required = false) Set<String> filtro, Map<String, Object> model) {
+    public String reservas(@RequestParam(required = false) Set<String> filtro, @RequestParam(value = "pag", required = false) Long pagina, Map<String, Object> model) {
 
         Optional<Set<String>> filtroOptional = Optional.ofNullable(filtro);
 
+        Long qtdReservas = reservaService.quantidadeDeReservas();
+
+        pagina = pagina == null ? 0 : pagina - 1; // evitando NullPointerException
+
+        int qtdPaginas = 1;
+        if (qtdReservas > 0 && !qtdReservas.equals(qtdItensPorPagina)) {
+            qtdPaginas = (int) (qtdReservas / qtdItensPorPagina) + 1;
+
+            if (qtdReservas % 2 == 1) {
+                // se for impar, ira acrencentar mais uma pagina para o item que sobrar
+                qtdPaginas++;
+            }
+        }
+
+        if (pagina > qtdPaginas) {
+            // caso o numero da pagina da paginação das reservas não existir
+            return "error/400";
+        }
+
+        // calculando o offset do numero do primeiro item da proxima pagina
+        int itemNumPagina = (int) (pagina * qtdItensPorPagina);
+
         List<Reserva> reservasList;
-        reservasList = reservaService.buscarReservas(filtroOptional.orElse(new HashSet<>()));
+        reservasList = reservaService.buscarReservas(filtroOptional.orElse(new HashSet<>()), itemNumPagina);
+
         model.put("reservas", reservasList);
+        model.put("qtdPaginas", qtdPaginas);
 
         return "admin/reservas";
     }

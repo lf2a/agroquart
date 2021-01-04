@@ -65,7 +65,7 @@ public class ReservaService {
     }
 
     @Transactional(readOnly = true)
-    public List<Reserva> buscarReservas(Set<String> filtros) {
+    public List<Reserva> buscarReservas(Set<String> filtros, int numeroDePartida) {
         StringBuilder filtro = new StringBuilder("");
 
         // montando os filtros em sql
@@ -88,7 +88,7 @@ public class ReservaService {
             }
         }
 
-        return reservaRepository.buscarReservas(filtro.toString());
+        return reservaRepository.buscarReservas(filtro.toString(), numeroDePartida);
     }
 
     @Transactional(readOnly = true)
@@ -145,5 +145,10 @@ public class ReservaService {
         reserva.setQuarto(quarto);
 
         reservaRepository.salvarOuAtualizar(reserva);
+    }
+
+    @Transactional(readOnly = true)
+    public Long quantidadeDeReservas() {
+        return reservaRepository.quantidadeDeReservas();
     }
 }

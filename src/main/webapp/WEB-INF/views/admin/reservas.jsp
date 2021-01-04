@@ -152,5 +152,17 @@
         </table>
     </c:otherwise>
 </c:choose>
+
+<c:if test="${qtdPaginas > 0 && qtdPaginas != 1}">
+    <c:if test="${param.pag > 1}">
+        <a href="${pageContext.request.contextPath}?pag=${param.pag - 1}">anterior</a>
+    </c:if>
+
+    <c:if test="${param.pag != qtdPaginas}">
+        <a href="${pageContext.request.contextPath}?pag=${empty param.pag ? "2": param.pag + 1}">proxima</a>
+    </c:if>
+
+    <span>${empty param.pag ? "1" : param.pag} de ${qtdPaginas}</span>
+</c:if>
 </body>
 </html>
