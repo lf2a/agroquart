@@ -81,6 +81,16 @@ public class UsuarioService implements UserDetailsService {
     }
 
     /**
+     * Irá buscar o email de todos os admins. (para envio em massa)
+     *
+     * @return A lista de todos os emails.
+     */
+    @Transactional(readOnly = true)
+    public List<String> buscarEmailDosAdmins() {
+        return usuarioRepository.buscarEmailDosAdmins();
+    }
+
+    /**
      * Irá buscar todos os objetos de tipo T do banco de dados.
      *
      * @return Uma lista com todos os objetos ou uma lista vazia.

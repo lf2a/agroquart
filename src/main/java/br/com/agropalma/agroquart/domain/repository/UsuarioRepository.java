@@ -3,12 +3,14 @@ package br.com.agropalma.agroquart.domain.repository;
 import br.com.agropalma.agroquart.domain.Usuario;
 
 import org.hibernate.Session;
+import org.hibernate.query.NativeQuery;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -61,6 +63,25 @@ public class UsuarioRepository implements ICrudRepository<Usuario, Long> {
         }
 
         return usuario;
+    }
+
+    public List<String> buscarEmailDosAdmins() {
+        // estabelecendo a sessão
+        Session session = entityManager.unwrap(Session.class);
+
+        String sql = "select (select u.email from usuario as u where u.matricula=u.usuario_matricula) as email " +
+                "from usuarios_permissoes as u where u.permissao_id = \n" +
+                "(select p.id from permissao as p where p.nome='ROLE_RESERVA');";
+
+        NativeQuery query = session.createNativeQuery(sql);
+
+        List<String> emailList = new ArrayList<>();
+
+        for (Object email : query.getResultList()) {
+            emailList.add(email.toString());
+        }
+
+        return emailList;
     }
 
     public boolean verificarEmail(String email) {
