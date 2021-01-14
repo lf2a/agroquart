@@ -6,11 +6,15 @@ import br.com.agropalma.agroquart.domain.repository.ReservaRepository;
 import br.com.agropalma.agroquart.web.form.ReservaForm;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -30,8 +34,20 @@ public class ReservaService {
     @Autowired
     private QuartoService quartoService;
 
+    @Autowired
+    private UsuarioService usuarioService;
+
+    @Autowired
+    private MailService mailService;
+
+    @Autowired
+    private Environment env;
+
+    @Autowired
+    HtmlTemplateService htmlTemplateService;
+
     @Transactional
-    public void salvarReserva(ReservaForm reservaForm) {
+    public void salvarReserva(ReservaForm reservaForm) throws IOException, RuntimeException {
 
         Reserva reserva = new Reserva.Builder()
                 .nomeCompleto(reservaForm.getNomeCompleto())
@@ -50,7 +66,19 @@ public class ReservaService {
 
         reservaRepository.salvarOuAtualizar(reserva);
 
-        // TODO: enviar email para quem solicitou e para os admins que tem permissão de reservar.
+        List<String> emailsAdmin = usuarioService.buscarEmailDosAdmins();
+
+        Map<String, Object> context = new HashMap<>();
+        context.put("reserva", reserva);
+
+        String html = htmlTemplateService.compilar(context, "nova-reserva");
+
+            mailService
+                    .ccAdmins(emailsAdmin) // envia para todos os admins
+                    .colaborador(reserva.getEmail()) // email do usuario que solicitou a reserva
+                    .assunto(env.getProperty("email.assunto.nova-reserva")) // busca o assunto da reserva do "application.properties"
+                    .conteudo(html)
+                    .enviar();
     }
 
     @Transactional
@@ -68,8 +96,7 @@ public class ReservaService {
     public List<Reserva> buscarReservas(Set<String> filtros, int numeroDePartida) {
         StringBuilder filtro = new StringBuilder("");
 
-        // montando os filtros em sql
-        // TODO: verificar se existe alguma outra forma de se fazer.
+        // montando os filtros em hql
         if (!filtros.isEmpty()) {
             filtro.append("where ");
 

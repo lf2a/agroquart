@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
+
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -50,8 +52,15 @@ public class ReservaController {
             return "redirect:/?formError=A data de inicio deve ser menor que a data de termino";
         }
 
-        reservaService.salvarReserva(reservaForm);
-
+        try {
+            reservaService.salvarReserva(reservaForm);
+        } catch (IOException | RuntimeException e) {
+            // caso o template de email nao pode ser encontrada - IOException
+            // caso haja algun erro ao enviar o email - RuntimeException
+            e.printStackTrace();
+            return "error/500";
+        }
+        
         return "redirect:/?sucesso";
     }
 
