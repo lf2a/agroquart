@@ -1,9 +1,12 @@
 package br.com.agropalma.agroquart.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <h1>MailSender.java</h1>
@@ -23,6 +26,10 @@ public class MailService {
     private String _conteudo;
     private String _colaborador;
     private String _admin;
+    private List<String> _ccAdmins;
+
+    @Value("${agroquart.email.from}")
+    private String emailFrom;
 
     public MailService assunto(String assunto) {
         this._assunto = assunto;
@@ -44,17 +51,32 @@ public class MailService {
         return this;
     }
 
-    public void enviar() {
+    public MailService ccAdmins(List<String> admins) {
+        this._ccAdmins = admins;
+        return this;
+    }
+
+    public void enviar() throws RuntimeException {
 
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("nao-responda@agropalma.com.br");
+        message.setFrom(emailFrom);
         message.setTo(this._colaborador);
 
-        if (this._admin != null)
-            message.setCc(this._admin); // irá ser enviado uma copia da menssagem para o admin logado no sistema
+        if (this._admin != null) {
+            message.setCc(this._admin);
+        }
+
+        if (this._ccAdmins != null) {
+            message.setBcc(this._ccAdmins.toArray(new String[this._ccAdmins.size()]));
+        }
+
+        if (this._admin == null && this._ccAdmins == null) {
+            throw new RuntimeException("É necessário enviar cópia da mensagem para algum admin.");
+        }
 
         message.setSubject(this._assunto);
         message.setText(this._conteudo);
+        
         emailSender.send(message);
     }
 }
