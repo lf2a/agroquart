@@ -32,9 +32,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private AuthenticationSuccessHandlerCustomizado authenticationSuccessHandlerCustomizado;
 
-    @Autowired
-    private ProdDbConfig prodDbConfig;
-
     /**
      * Este método irá definir um authentication provider customizado.
      *

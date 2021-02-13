@@ -1,7 +1,6 @@
 package br.com.agropalma.agroquart.web;
 
 import br.com.agropalma.agroquart.config.AuthenticationSuccessHandlerCustomizado;
-import br.com.agropalma.agroquart.config.ProdDbConfig;
 import br.com.agropalma.agroquart.service.CasaService;
 import br.com.agropalma.agroquart.service.HospedariaService;
 import br.com.agropalma.agroquart.service.PermissaoService;
@@ -40,9 +39,6 @@ public class AdminControllerTests {
 
     @MockBean
     private AuthenticationSuccessHandlerCustomizado successHandler;
-
-    @MockBean
-    private ProdDbConfig prodDbConfig;
 
     @MockBean
     private PermissaoService permissaoService;
