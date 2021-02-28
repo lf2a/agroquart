@@ -377,26 +377,4 @@ public class Reserva {
 
         return criadaEm.format(formatter);
     }
-
-    @Override
-    public String toString() {
-        return "Reserva{" +
-                "id=" + id +
-                ", nomeCompleto='" + nomeCompleto + '\'' +
-                ", matricula='" + matricula + '\'' +
-                ", gerenteResponsavel='" + gerenteResponsavel + '\'' +
-                ", email='" + email + '\'' +
-                ", empresa='" + empresa + '\'' +
-                ", dataInicio=" + dataInicio +
-                ", dataTermino=" + dataTermino +
-                ", motivo='" + motivo + '\'' +
-                ", autorizada=" + autorizada +
-                ", arquivar=" + arquivada +
-                ", cargo=" + cargo +
-                ", quarto=" + quarto +
-                ", criadaEm=" + criadaEm +
-                ", tipo=" + tipo +
-                ", sexo=" + sexo +
-                '}';
-    }
 }

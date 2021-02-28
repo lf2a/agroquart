@@ -1,5 +1,9 @@
 package br.com.agropalma.agroquart.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,6 +27,9 @@ import java.util.List;
  * @since 23/11/2020
  */
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "quarto")
 public class Quarto {
 
@@ -43,65 +50,4 @@ public class Quarto {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "quarto", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private List<Reserva> reservas;
-
-    public Quarto() {
-    }
-
-    public Quarto(Long id, Long capacidade, Casa casa, Long reservado, List<Reserva> reservas) {
-        this.id = id;
-        this.capacidade = capacidade;
-        this.casa = casa;
-        this.reservado = reservado;
-        this.reservas = reservas;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public Long getCapacidade() {
-        return capacidade;
-    }
-
-    public void setCapacidade(Long capacidade) {
-        this.capacidade = capacidade;
-    }
-
-    public Casa getCasa() {
-        return casa;
-    }
-
-    public void setCasa(Casa casa) {
-        this.casa = casa;
-    }
-
-    public Long getReservado() {
-        return reservado;
-    }
-
-    public void setReservado(Long reservado) {
-        this.reservado = reservado;
-    }
-
-    public List<Reserva> getReservas() {
-        return reservas;
-    }
-
-    public void setReservas(List<Reserva> reservas) {
-        this.reservas = reservas;
-    }
-
-    @Override
-    public String toString() {
-        return "Quarto{" +
-                "id=" + id +
-                ", capacidade=" + capacidade +
-                ", casa=" + casa +
-                ", reservado=" + reservado +
-                '}';
-    }
 }

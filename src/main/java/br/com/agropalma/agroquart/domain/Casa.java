@@ -1,5 +1,9 @@
 package br.com.agropalma.agroquart.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,6 +27,9 @@ import java.util.List;
  * @since 23/11/2020
  */
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "casa")
 public class Casa {
 
@@ -50,84 +57,11 @@ public class Casa {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "casa", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private List<Quarto> quartos;
 
-    public Casa() {
-    }
-
     public Casa(Long numero, String tipo, String sexo, boolean terceirizado, Hospedaria hospedaria) {
         this.numero = numero;
         this.tipo = tipo;
         this.sexo = sexo;
         this.terceirizado = terceirizado;
         this.hospedaria = hospedaria;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public Casa setId(Long id) {
-        this.id = id;
-        return this;
-    }
-
-    public Long getNumero() {
-        return numero;
-    }
-
-    public void setNumero(Long numero) {
-        this.numero = numero;
-    }
-
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
-
-    public String getSexo() {
-        return sexo;
-    }
-
-    public void setSexo(String sexo) {
-        this.sexo = sexo;
-    }
-
-    public boolean isTerceirizado() {
-        return terceirizado;
-    }
-
-    public void setTerceirizado(boolean terceirizado) {
-        this.terceirizado = terceirizado;
-    }
-
-    public Hospedaria getHospedaria() {
-        return hospedaria;
-    }
-
-    public void setHospedaria(Hospedaria hospedaria) {
-        this.hospedaria = hospedaria;
-    }
-
-    public List<Quarto> getQuartos() {
-        return quartos;
-    }
-
-    public Casa setQuartos(List<Quarto> quartos) {
-        this.quartos = quartos;
-        return this;
-    }
-
-    @Override
-    public String toString() {
-        return "Casa{" +
-                "id=" + numero +
-                ", numero=" + numero +
-                ", tipo='" + tipo + '\'' +
-                ", sexo='" + sexo + '\'' +
-                ", terceirizado=" + terceirizado +
-                ", hospedaria=" + hospedaria +
-                '}';
     }
 }

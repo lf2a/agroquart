@@ -1,5 +1,9 @@
 package br.com.agropalma.agroquart.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,6 +30,9 @@ import java.util.Objects;
  * @since 27-10-2020
  */
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "usuario")
 public class Usuario implements Serializable {
 
@@ -62,9 +69,6 @@ public class Usuario implements Serializable {
             joinColumns = @JoinColumn(name = "usuario_matricula"),
             inverseJoinColumns = @JoinColumn(name = "permissao_id"))
     private Collection<Permissao> permissoes;
-
-    public Usuario() {
-    }
 
 
     public static class Builder {
@@ -157,86 +161,6 @@ public class Usuario implements Serializable {
         permissoes = builder.permissoes;
     }
 
-    public Long getMatricula() {
-        return matricula;
-    }
-
-    public void setMatricula(Long matricula) {
-        this.matricula = matricula;
-    }
-
-    public String getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
-    }
-
-    public String getNomeCompleto() {
-        return nomeCompleto;
-    }
-
-    public void setNomeCompleto(String nomeCompleto) {
-        this.nomeCompleto = nomeCompleto;
-    }
-
-    public String getEmpresa() {
-        return empresa;
-    }
-
-    public void setEmpresa(String empresa) {
-        this.empresa = empresa;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
-
-    public boolean isAtivo() {
-        return ativo;
-    }
-
-    public void setAtivo(boolean ativo) {
-        this.ativo = ativo;
-    }
-
-    public Date getUltimoLogin() {
-        return ultimoLogin;
-    }
-
-    public void setUltimoLogin(Date ultimoLogin) {
-        this.ultimoLogin = ultimoLogin;
-    }
-
-    public Date getCriadaEm() {
-        return criadaEm;
-    }
-
-    public void setCriadaEm(Date criadaEm) {
-        this.criadaEm = criadaEm;
-    }
-
-    public Collection<Permissao> getPermissoes() {
-        return permissoes;
-    }
-
-    public void setPermissoes(Collection<Permissao> permissoes) {
-        this.permissoes = permissoes;
-    }
-
     public String formatarData(Date date) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
         return simpleDateFormat.format(date);
@@ -257,26 +181,5 @@ public class Usuario implements Serializable {
                 Objects.equals(ultimoLogin, usuario1.ultimoLogin) &&
                 criadaEm.equals(usuario1.criadaEm) &&
                 Objects.equals(permissoes, usuario1.permissoes);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(matricula, usuario, nomeCompleto, empresa, email, senha, ativo, ultimoLogin, criadaEm, permissoes);
-    }
-
-    @Override
-    public String toString() {
-        return "Usuario{" +
-                "matricula=" + matricula +
-                ", usuario='" + usuario + '\'' +
-                ", nomeCompleto='" + nomeCompleto + '\'' +
-                ", empresa='" + empresa + '\'' +
-                ", email='" + email + '\'' +
-                ", senha='" + senha + '\'' +
-                ", ativo=" + ativo +
-                ", ultimoLogin=" + formatarData(ultimoLogin) +
-                ", criadaEm=" + formatarData(criadaEm) +
-                ", permissoes=" + permissoes +
-                '}';
     }
 }
