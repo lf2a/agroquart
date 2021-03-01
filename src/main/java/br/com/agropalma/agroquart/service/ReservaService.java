@@ -89,7 +89,6 @@ public class ReservaService {
 
         reservaRepository.salvarOuAtualizar(reserva);
 
-        // TODO: enviar email para quem solicitou e para os admins que tem permissão de reservar.
     }
 
     @Transactional(readOnly = true)
@@ -150,8 +149,6 @@ public class ReservaService {
         Reserva reserva = reservaRepository.buscarPorId(id);
 
         reserva.setAutorizada(!reserva.isAutorizada());
-
-        // TODO: enviar email para quem solicitou a reserva
 
         reservaRepository.salvarOuAtualizar(reserva);
     }
