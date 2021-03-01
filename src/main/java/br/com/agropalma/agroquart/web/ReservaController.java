@@ -233,6 +233,4 @@ public class ReservaController {
 
         return "error/404";
     }
-
-    // TODO: get - gerar relatorio completo com base em trimestres (irá ser criada um controler para relatorios)
 }
