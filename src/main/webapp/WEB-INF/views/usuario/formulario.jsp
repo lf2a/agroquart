@@ -38,17 +38,17 @@
     <input type="checkbox" id="ativo" name="ativo" ${empty usuario.ativo ? "": "checked"}>
 
     <!--  Modelos: https://colorlib.com/polygon/concept/pages/multiselect.html  -->
-    <select multiple size="5" name="permissoes">
+    <select multiple size="5" name="permissoes" disabled>
         <c:forEach items="${usuario.permissoes}" var="p">
-            <option value="${p.id}" selected>${p.nome}</option>
-        </c:forEach>
-    </select>
-
-    <select multiple size="5" name="">
-        <c:forEach items="${permissoes}" var="p">
             <option value="${p.id}">${p.nome}</option>
         </c:forEach>
     </select>
+
+<%--    <select multiple size="5" name="">--%>
+<%--        <c:forEach items="${permissoes}" var="p">--%>
+<%--            <option value="${p.id}">${p.nome}</option>--%>
+<%--        </c:forEach>--%>
+<%--    </select>--%>
 
     <input class="input" id="senha" name="senha" type="password" placeholder="Password">
     <input class="input" id="senha" name="senha2" type="password" placeholder="Password">
