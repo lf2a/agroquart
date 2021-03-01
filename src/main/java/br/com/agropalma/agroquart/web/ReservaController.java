@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.mail.MessagingException;
 import javax.validation.Valid;
 
 import java.io.IOException;
@@ -54,7 +55,7 @@ public class ReservaController {
 
         try {
             reservaService.salvarReserva(reservaForm);
-        } catch (IOException | RuntimeException e) {
+        } catch (IOException | RuntimeException | MessagingException e) {
             // caso o template de email nao pode ser encontrada - IOException
             // caso haja algun erro ao enviar o email - RuntimeException
             e.printStackTrace();

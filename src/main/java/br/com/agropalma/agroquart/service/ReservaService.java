@@ -10,6 +10,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.mail.MessagingException;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -47,7 +48,7 @@ public class ReservaService {
     HtmlTemplateService htmlTemplateService;
 
     @Transactional
-    public void salvarReserva(ReservaForm reservaForm) throws IOException, RuntimeException {
+    public void salvarReserva(ReservaForm reservaForm) throws IOException, RuntimeException, MessagingException {
 
         Reserva reserva = new Reserva.Builder()
                 .nomeCompleto(reservaForm.getNomeCompleto())
@@ -73,12 +74,12 @@ public class ReservaService {
 
         String html = htmlTemplateService.compilar(context, "nova-reserva");
 
-            mailService
-                    .ccAdmins(emailsAdmin) // envia para todos os admins
-                    .colaborador(reserva.getEmail()) // email do usuario que solicitou a reserva
-                    .assunto(env.getProperty("email.assunto.nova-reserva")) // busca o assunto da reserva do "application.properties"
-                    .conteudo(html)
-                    .enviar();
+        mailService
+                .ccAdmins(emailsAdmin) // envia para todos os admins
+                .colaborador(reserva.getEmail()) // email do usuario que solicitou a reserva
+                .assunto(env.getProperty("email.assunto.nova-reserva")) // busca o assunto da reserva do "application.properties"
+                .conteudo(html)
+                .enviar();
     }
 
     @Transactional

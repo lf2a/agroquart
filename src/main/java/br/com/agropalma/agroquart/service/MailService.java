@@ -2,10 +2,12 @@ package br.com.agropalma.agroquart.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import java.util.List;
 
 /**
@@ -56,9 +58,12 @@ public class MailService {
         return this;
     }
 
-    public void enviar() throws RuntimeException {
+    public void enviar() throws RuntimeException, MessagingException {
 
-        SimpleMailMessage message = new SimpleMailMessage();
+        MimeMessage mimeMessage = emailSender.createMimeMessage();
+        MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
+
+//        SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(emailFrom);
         message.setTo(this._colaborador);
 
@@ -75,8 +80,8 @@ public class MailService {
         }
 
         message.setSubject(this._assunto);
-        message.setText(this._conteudo);
-        
-        emailSender.send(message);
+        message.setText(this._conteudo, true);
+
+        emailSender.send(mimeMessage);
     }
 }
