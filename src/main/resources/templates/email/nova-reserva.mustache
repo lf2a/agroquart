@@ -1,4 +1,55 @@
-Este e um email de uma nova reserva criada.
-{{ reserva.getDataInicioFormatada }}
-{{ reserva.getDataTerminoFormatada }}
-<!-- TODO: Montar o template deste email -->
+<!doctype html>
+<html>
+<head>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+<body>
+<p>Olá <b>{{ reserva.nomeCompleto }}</b>! Sua reserva já foi solicitada e está em analise, aguarde que o avisaremos assim que
+    ela for autorizada.</p>
+
+<table>
+    <tr>
+        <th>Matrícula</th>
+        <th>Gerente Responsável</th>
+        <th>Email</th>
+        <th>Empresa</th>
+        <th>Início</th>
+        <th>Termino</th>
+        <th>Cargo</th>
+        <th>Tipo da reserva</th>
+        <th>Sexo</th>
+    </tr>
+    <tr>
+        <td>{{ reserva.matricula }}</td>
+        <td>{{ reserva.gerenteResponsavel }}</td>
+        <td>{{ reserva.email }}</td>
+        <td>{{ reserva.empresa }}</td>
+        <td>{{ reserva.getDataInicioFormatada }}</td>
+        <td>{{ reserva.getDataTerminoFormatada }}</td>
+        <td>{{ reserva.cargo }}</td>
+        <td>{{ reserva.tipo }}</td>
+        <td>{{ reserva.sexo }}</td>
+    </tr>
+</table>
+
+<h3>Motivo:</h3>
+<p>{{ reserva.motivo }}</p>
+
+</body>
+</html>
